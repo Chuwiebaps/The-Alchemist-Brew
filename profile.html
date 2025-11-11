@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Starlight Profile - Alchemist's Brew</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'light-pink': '#F8E9E9',   /* Pale Pink Background */
+                        'med-pink': '#F0D4D4',     /* Sidebar Background */
+                        'dark-pink': '#E9A0A0',    /* Input/Button Background */
+                        'text-pink': '#C08080',    /* Darker Pink Text/Accent */
+                        'profile-icon': '#E56D6D', /* Bright Icon/Accent Color */
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Georgia', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: var(--light-pink);
+            font-family: 'Inter', sans-serif;
+            color: #C08080;
+        }
+
+        /* Header strip below the nav bar */
+        .header-strip {
+            height: 30px;
+            background-color: #F0E0E0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Styling for the main section title (e.g., Starlight Profile) */
+        .section-title {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            color: #E9A0A0; /* Dark Pink */
+            text-shadow: 2px 2px 0 #F8E9E9; /* Pale Pink 3D Shadow */
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        /* Input field styling based on screenshot */
+        .pink-input {
+            background-color: #F0D4D4; /* Med Pink */
+            border: 1px solid #E9A0A0; /* Dark Pink Border */
+            color: #C08080;
+            padding: 0.75rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            width: 100%;
+            transition: all 0.2s;
+        }
+        .pink-input:focus {
+            background-color: #FFF;
+            border-color: #E56D6D; /* Brighter accent on focus */
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(229, 109, 109, 0.5);
+        }
+
+        /* Profile Menu Link Styling */
+        .menu-link {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #C08080;
+            cursor: pointer;
+            padding: 8px 0;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .menu-link:hover {
+            color: #E56D6D; /* Brighter red on hover */
+        }
+        .menu-link.active {
+            color: #E56D6D;
+            font-weight: 700;
+            text-shadow: 1px 1px 1px rgba(0,0,0,0.1);
+        }
+
+        /* Custom Icon Styling */
+        .profile-icon {
+            color: #E56D6D;
+            fill: #E56D6D;
+        }
+        .text-profile-icon {
+            color: #E56D6D;
+        }
+        
+        /* Order History Boxes */
+        .order-box {
+            background-color: #F0D4D4;
+            border: 1px solid #E9A0A0;
+            min-height: 150px;
+        }
+
+        /* Status Tag Styling */
+        .status-tag {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 9999px; /* rounded-full */
+            text-shadow: 0 1px 1px rgba(0,0,0,0.1);
+            letter-spacing: 0.05em;
+        }
+        .status-ongoing { background-color: #F7D89B; color: #9A5A00; } /* Yellowish for Ongoing */
+        .status-processing { background-color: #A0E9A0; color: #007000; } /* Greenish for Processing */
+        .status-completed { background-color: #E9A0A0; color: #FFFFFF; } /* Dark Pink for Completed */
+        .status-cancelled { background-color: #C0C0C0; color: #555555; } /* Grey for Cancelled */
+
+        /* Hide content sections by default */
+        .profile-section {
+            display: none;
+        }
+        .profile-section.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- Firebase SDK Imports -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { setLogLevel } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // --- GLOBAL SETUP ---
+        setLogLevel('Debug');
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = JSON.parse(typeof __firebase_config !== 'undefined' ? __firebase_config : '{}');
+
+        let app, db, auth, userId = null;
+        let userData = {};
+
+        // --- AUTHENTICATION & INITIALIZATION ---
+        async function initializeFirebase() {
+            try {
+                app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+                auth = getAuth(app);
+                
+                await new Promise(resolve => {
+                    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+                        if (user) {
+                            userId = user.uid;
+                        } else {
+                            try {
+                                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                                    await signInWithCustomToken(auth, __initial_auth_token);
+                                    userId = auth.currentUser.uid;
+                                } else {
+                                    const anonUser = await signInAnonymously(auth);
+                                    userId = anonUser.user.uid;
+                                }
+                            } catch (error) {
+                                console.error("Authentication failed:", error);
+                                userId = crypto.randomUUID();
+                            }
+                        }
+                        
+                        document.getElementById('user-id-display').textContent = `DB User ID: ${userId}`;
+                        startRealtimeListener();
+                        unsubscribe(); 
+                        resolve();
+                    });
+                });
+            } catch (error) {
+                console.error("Firebase initialization failed:", error);
+                document.getElementById('status-message').textContent = 'Error: Firebase failed to load. Check console.';
+            }
+        }
+
+        // --- FIRESTORE OPERATIONS ---
+        const PROFILE_COLLECTION = 'profiles';
+
+        /**
+         * Gets the Firestore document reference for the current user's profile data.
+         * Using private data path: /artifacts/{appId}/users/{userId}/{your_collection_name}/{documentId}
+         */
+        function getProfileDocRef() {
+            if (!db || !userId) return null;
+            return doc(db, `artifacts/${appId}/users/${userId}/${PROFILE_COLLECTION}/user_data`);
+        }
+
+        /**
+         * Starts the realtime listener for the user's profile data.
+         */
+        function startRealtimeListener() {
+            const profileRef = getProfileDocRef();
+            if (!profileRef) return;
+
+            // Add sample data if the profile document does not exist
+            const initializeProfile = async () => {
+                const docSnap = await getDoc(profileRef);
+                if (!docSnap.exists()) {
+                    const sampleData = {
+                        username: "AlchemistMaster",
+                        email: "alchemist@brew.com",
+                        contactNumber: "+63 912 345 6789",
+                        dateOfBirth: "1995-10-26",
+                        gender: "Non-Binary",
+                        fullName: "Dr. Eldrin Elixir",
+                        // Mock past orders with status variation
+                        orders: [
+                            { id: 'O1004', date: '2025-11-05', total: 620.00, status: 'Ongoing', items: ['Mana Potion x 2', 'Invisibility Cloak x 1'] },
+                            { id: 'O1003', date: '2025-10-28', total: 350.00, status: 'Processing', items: ['Arcane Coffee x 3', 'Enchanted Scone x 1'] },
+                            { id: 'O1002', date: '2025-09-05', total: 1200.00, status: 'Completed', items: ['Study Room (3hrs)', 'Pastries Set x 1'] },
+                            { id: 'O1001', date: '2025-08-15', total: 450.00, status: 'Cancelled', items: ['The Midas Touch x 2', 'Youth Elixir x 1'] }
+                        ]
+                    };
+                    await setDoc(profileRef, sampleData);
+                }
+            };
+            // Run initialization once
+            initializeProfile();
+
+
+            onSnapshot(profileRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    userData = docSnap.data();
+                    console.log("Profile data updated from Firestore:", userData);
+                } else {
+                    userData = {};
+                    console.log("No profile data found. Using default.");
+                }
+                updateProfileUI();
+            }, (error) => {
+                console.error("Error listening to profile changes:", error);
+            });
+        }
+
+        /**
+         * Saves the current user data state to Firestore.
+         */
+        window.saveUserData = async function(updatedData) {
+            const profileRef = getProfileDocRef();
+            if (!profileRef) return;
+
+            try {
+                // Merge new data with existing data
+                await setDoc(profileRef, {...userData, ...updatedData}, { merge: true });
+                alert("Information updated successfully! (Data saved to Firestore)");
+                console.log("User data saved:", updatedData);
+            } catch (e) {
+                console.error("Error writing document: ", e);
+                alert("Failed to save information. See console for details.");
+            }
+        }
+
+        // --- UI LOGIC & NAVIGATION ---
+
+        /**
+         * Navigates between profile sections.
+         * @param {string} sectionId - The ID of the section to show.
+         */
+        window.showSection = function(sectionId) {
+            // 1. Hide all content sections
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.classList.remove('active');
+            });
+
+            // 2. Show the requested section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+
+            // 3. Update active menu link styling
+            document.querySelectorAll('.menu-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            document.getElementById(`link-${sectionId}`).classList.add('active');
+
+            // 4. Update the main page title
+            const titleMap = {
+                'starlight-profile': 'Starlight Profile',
+                'past-orders': 'Spellbound Transactions',
+                'change-username-email': 'Ethereal Rebirth',
+                'change-password': 'The Key of Renewal',
+                'log-out': 'Exit the Realm',
+                'delete-account': 'Release to the Stars'
+            };
+            document.getElementById('section-main-title').textContent = titleMap[sectionId] || 'Profile Settings';
+
+            // 5. Ensure UI is populated if it's the main profile
+            if (sectionId === 'starlight-profile') {
+                updateProfileUI();
+            } else if (sectionId === 'past-orders') {
+                renderPastOrders();
+            }
+        }
+
+
+        /**
+         * Populates the Starlight Profile form with user data.
+         */
+        function updateProfileUI() {
+            // Update sidebar username
+            const usernameDisplay = userData.username || 'Guest';
+            document.getElementById('sidebar-username').textContent = usernameDisplay;
+            document.getElementById('profile-form-username').value = userData.username || '';
+            document.getElementById('profile-form-email').value = userData.email || '';
+            document.getElementById('profile-form-contact').value = userData.contactNumber || '';
+            
+            // Handle DOB Selects
+            if (userData.dateOfBirth) {
+                const [year, month, day] = userData.dateOfBirth.split('-');
+                document.getElementById('dob-year').value = year;
+                document.getElementById('dob-month').value = month;
+                document.getElementById('dob-day').value = day;
+            }
+            
+            // Handle Gender Select
+            document.getElementById('profile-form-gender').value = userData.gender || '';
+
+            // Update Ethereal Rebirth (Username/Email change)
+            document.getElementById('current-username').value = userData.username || '';
+            document.getElementById('current-email').value = userData.email || '';
+
+            // If a section is already active, re-render it
+            const activeSection = document.querySelector('.profile-section.active');
+            if (activeSection) {
+                showSection(activeSection.id);
+            } else {
+                // Default to showing the main profile page
+                showSection('starlight-profile');
+            }
+        }
+
+        /**
+         * Handles the form submission for the main Starlight Profile form.
+         */
+        window.handleProfileUpdate = function() {
+            const dob = `${document.getElementById('dob-year').value}-${document.getElementById('dob-month').value}-${document.getElementById('dob-day').value}`;
+            
+            const updatedData = {
+                username: document.getElementById('profile-form-username').value,
+                email: document.getElementById('profile-form-email').value,
+                contactNumber: document.getElementById('profile-form-contact').value,
+                dateOfBirth: dob !== '--' ? dob : null, // Only save if a date is selected
+                gender: document.getElementById('profile-form-gender').value,
+            };
+            
+            // Simple validation to ensure required fields are not empty
+            if (!updatedData.username || !updatedData.email || !updatedData.contactNumber) {
+                alert("Username, E-mail, and Contact Number are required fields.");
+                return;
+            }
+
+            saveUserData(updatedData);
+        }
+
+        /**
+         * Renders the mock past orders in the Spellbound Transactions section.
+         */
+        function renderPastOrders() {
+            const container = document.getElementById('past-orders-list');
+            container.innerHTML = '';
+            
+            const orders = userData.orders || [];
+
+            if (orders.length === 0) {
+                 container.innerHTML = `<div class="p-8 text-center text-text-pink/70 italic">No spellbound transactions found in the archives.</div>`;
+                 return;
+            }
+
+            orders.forEach(order => {
+                // Determine CSS class for status color
+                let statusClass = 'status-completed'; // Default
+                switch (order.status.toLowerCase()) {
+                    case 'ongoing':
+                        statusClass = 'status-ongoing';
+                        break;
+                    case 'processing':
+                        statusClass = 'status-processing';
+                        break;
+                    case 'cancelled':
+                        statusClass = 'status-cancelled';
+                        break;
+                    case 'completed':
+                    default:
+                        statusClass = 'status-completed';
+                        break;
+                }
+
+                const orderEl = document.createElement('div');
+                orderEl.className = 'order-box p-6 rounded-xl shadow-md mb-6 transition-transform hover:scale-[1.01]';
+                orderEl.innerHTML = `
+                    <div class="flex justify-between items-start mb-2 border-b border-dark-pink/30 pb-2">
+                        <p class="text-lg font-bold text-text-pink tracking-wide">Order #${order.id}</p>
+                        <span class="status-tag ${statusClass}">${order.status.toUpperCase()}</span>
+                    </div>
+                    <p class="text-sm text-text-pink/80 mb-3">Order Date: ${order.date}</p>
+                    
+                    <div class="space-y-1 text-sm text-text-pink font-semibold">
+                        <p>Items Transferred:</p>
+                        <ul class="list-disc list-inside ml-4 text-xs italic text-text-pink/70">
+                            ${order.items.map(item => `<li>${item}</li>`).join('')}
+                        </ul>
+                    </div>
+                    
+                    <div class="flex justify-between items-center pt-4 border-t border-dark-pink/30 mt-4">
+                        <p class="font-bold text-xl text-profile-icon">Total: ₱${order.total.toFixed(2)}</p>
+                        <div class="space-x-3">
+                            <button class="bg-dark-pink text-white text-sm px-4 py-2 rounded-lg hover:bg-profile-icon transition-colors shadow-lg" onclick="alert('Simulating tracking for ${order.id}...')">Track Order</button>
+                            ${order.status.toLowerCase() === 'completed' 
+                                ? `<button class="bg-dark-pink/70 text-white text-sm px-4 py-2 rounded-lg hover:bg-dark-pink transition-colors shadow-md" onclick="alert('Simulating reordering for ${order.id}...')">Buy Again</button>`
+                                : ''
+                            }
+                        </div>
+                    </div>
+                `;
+                container.appendChild(orderEl);
+            });
+        }
+
+        /**
+         * Helper to generate options for select menus.
+         */
+        function populateDOBSelects() {
+            const currentYear = new Date().getFullYear();
+            const yearSelect = document.getElementById('dob-year');
+            const monthSelect = document.getElementById('dob-month');
+            const daySelect = document.getElementById('dob-day');
+
+            // Year
+            for (let i = currentYear; i >= currentYear - 100; i--) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = i;
+                yearSelect.appendChild(option);
+            }
+
+            // Month
+            for (let i = 1; i <= 12; i++) {
+                const monthName = new Date(0, i - 1).toLocaleString('default', { month: 'long' });
+                const monthValue = String(i).padStart(2, '0');
+                const option = document.createElement('option');
+                option.value = monthValue;
+                option.textContent = monthName;
+                monthSelect.appendChild(option);
+            }
+
+            // Day (Max 31, simple for demo)
+            for (let i = 1; i <= 31; i++) {
+                const dayValue = String(i).padStart(2, '0');
+                const option = document.createElement('option');
+                option.value = dayValue;
+                option.textContent = i;
+                daySelect.appendChild(option);
+            }
+        }
+        
+        /**
+         * Handles Log Out action.
+         */
+        window.handleLogout = async function() {
+            // Using a simple alert since confirm() is discouraged in this environment
+            const confirmed = alert('Exiting the realm now. (Log Out Confirmed)'); 
+            
+            try {
+                await signOut(auth);
+                // Re-authenticate anonymously to keep the app running
+                await signInAnonymously(auth);
+                alert("You have successfully logged out. You are now signed in as Anonymous.");
+                window.location.reload(); // Refresh to ensure UI resets
+            } catch (error) {
+                console.error("Logout failed:", error);
+                alert("Logout failed. See console.");
+            }
+        }
+
+        /**
+         * Handles Delete Account action.
+         */
+        window.handleDeleteAccount = function() {
+            alert("Account Deletion is a powerful ritual! (Feature not fully implemented in this demo, but the prompt would follow after confirmation.)");
+        }
+
+
+        // --- MAIN ENTRY POINT ---
+        window.onload = () => {
+            populateDOBSelects();
+            initializeFirebase();
+        };
+
+    </script>
+
+    <!-- 1. Navigation Bar -->
+    <header class="bg-light-pink shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center text-text-pink">
+            <!-- Logo and Name -->
+            <div class="flex items-center space-x-2">
+                <!-- Using a placeholder logo from your screenshot -->
+                <img src="https://placehold.co/40x40/E9A0A0/F8E9E9?text=AB" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-profile-icon">
+                <h1 class="text-xl font-bold tracking-wider">Alchemist's Brew</h1>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#" class="hover:text-profile-icon transition-colors">Home</a>
+                <a href="#" class="hover:text-profile-icon transition-colors">Menu</a>
+                <a href="#" class="hover:text-profile-icon transition-colors">Study Room</a>
+                <a href="#" class="hover:text-profile-icon transition-colors">Contact Us</a>
+            </nav>
+
+            <!-- Profile Dropdown (Simulating your dropdown menu) -->
+            <div class="flex items-center space-x-4">
+                <button class="p-2">
+                    <i data-lucide="shopping-cart" class="w-5 h-5 text-text-pink hover:text-profile-icon transition-colors"></i>
+                </button>
+                <div class="flex items-center space-x-1 cursor-pointer group">
+                    <span class="text-sm font-semibold border-b border-text-pink hover:text-profile-icon">Sign In / Register</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-text-pink group-hover:text-profile-icon transition-colors"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Header Strip -->
+    <div class="header-strip"></div>
+
+    <!-- 2. Main Profile Content Area -->
+    <main class="container mx-auto px-4 py-12">
+        <div class="bg-white rounded-xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-4 min-h-[700px]">
+            
+            <!-- LEFT COLUMN: Profile Sidebar -->
+            <div class="lg:col-span-1 bg-med-pink p-8 flex flex-col items-center">
+                <!-- Profile Icon & Username -->
+                <div class="mb-8 text-center">
+                    <div class="w-24 h-24 mx-auto rounded-full bg-light-pink border-4 border-profile-icon flex items-center justify-center">
+                        <i data-lucide="user-circle" class="profile-icon w-16 h-16"></i>
+                    </div>
+                    <p id="sidebar-username" class="text-xl font-semibold mt-2 text-profile-icon">Username</p>
+                </div>
+
+                <!-- Profile Menu -->
+                <nav class="w-full space-y-4 text-center">
+                    <a id="link-starlight-profile" class="menu-link" onclick="showSection('starlight-profile')">Starlight Profile</a>
+                    <a id="link-past-orders" class="menu-link" onclick="showSection('past-orders')">Check Past Orders</a>
+                    <a id="link-change-username-email" class="menu-link" onclick="showSection('change-username-email')">Change Username/Email</a>
+                    <a id="link-change-password" class="menu-link" onclick="showSection('change-password')">Change Password</a>
+                    <a id="link-log-out" class="menu-link" onclick="showSection('log-out')">Log Out</a>
+                    <a id="link-delete-account" class="menu-link" onclick="showSection('delete-account')">Delete Account</a>
+                </nav>
+            </div>
+            
+            <!-- RIGHT COLUMN: Section Content -->
+            <div class="lg:col-span-3 p-8 bg-light-pink relative">
+                 <div class="text-xs absolute top-2 right-2 text-gray-500">
+                    <span id="user-id-display" class="font-mono"></span>
+                </div>
+                <!-- Section Title -->
+                <div class="mb-12 text-left">
+                    <h2 id="section-main-title" class="section-title inline-block"></h2>
+                </div>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- 1. Starlight Profile (Default View) -->
+                <!-- ---------------------------------------------------- -->
+                <section id="starlight-profile" class="profile-section active">
+                    <form onsubmit="event.preventDefault(); handleProfileUpdate();" class="space-y-6 max-w-lg">
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">Username</span>
+                            <input type="text" id="profile-form-username" class="pink-input mt-1" required>
+                        </label>
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">E-mail</span>
+                            <input type="email" id="profile-form-email" class="pink-input mt-1" required>
+                        </label>
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">Contact Number</span>
+                            <input type="tel" id="profile-form-contact" class="pink-input mt-1" required>
+                        </label>
+
+                        <div class="space-y-2">
+                            <span class="font-medium text-text-pink block">Date of Birth (Optional)</span>
+                            <div class="grid grid-cols-3 gap-4">
+                                <select id="dob-month" class="pink-input appearance-none text-text-pink cursor-pointer">
+                                    <option value="" disabled selected>Month</option>
+                                </select>
+                                <select id="dob-day" class="pink-input appearance-none text-text-pink cursor-pointer">
+                                    <option value="" disabled selected>Day</option>
+                                </select>
+                                <select id="dob-year" class="pink-input appearance-none text-text-pink cursor-pointer">
+                                    <option value="" disabled selected>Year</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="space-y-2">
+                            <span class="font-medium text-text-pink block">Gender (Optional)</span>
+                            <select id="profile-form-gender" class="pink-input appearance-none text-text-pink cursor-pointer">
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="Female">Female</option>
+                                <option value="Male">Male</option>
+                                <option value="Non-Binary">Non-Binary</option>
+                                <option value="Prefer Not to Say">Prefer Not to Say</option>
+                            </select>
+                        </div>
+                        
+                        <div class="pt-4">
+                            <button type="submit" class="bg-dark-pink text-white px-8 py-3 rounded-xl font-semibold hover:bg-profile-icon transition-colors shadow-lg">
+                                Update Information
+                            </button>
+                        </div>
+                    </form>
+                </section>
+                
+                <!-- ---------------------------------------------------- -->
+                <!-- 2. Check Past Orders -->
+                <!-- ---------------------------------------------------- -->
+                <section id="past-orders" class="profile-section">
+                    <h3 class="text-xl font-bold text-text-pink mb-4">Purchasing History</h3>
+                    <div id="past-orders-list" class="max-h-[600px] overflow-y-auto pr-2">
+                        <!-- Order list will be rendered here by JS -->
+                    </div>
+                </section>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- 3. Change Username/Email (Ethereal Rebirth) -->
+                <!-- ---------------------------------------------------- -->
+                <section id="change-username-email" class="profile-section">
+                    <div class="flex items-center mb-6">
+                        <div class="w-20 h-20 mx-auto rounded-full bg-light-pink border-4 border-profile-icon flex items-center justify-center mr-4">
+                            <i data-lucide="user-circle" class="profile-icon w-12 h-12"></i>
+                        </div>
+                        <div>
+                            <button class="bg-dark-pink/70 text-white text-sm px-4 py-1 rounded-lg hover:bg-dark-pink transition-colors mr-2" onclick="alert('Simulating image upload...')">Upload</button>
+                            <button class="bg-dark-pink/70 text-white text-sm px-4 py-1 rounded-lg hover:bg-dark-pink transition-colors" onclick="alert('Simulating image removal...')">Remove</button>
+                        </div>
+                    </div>
+
+                    <form onsubmit="event.preventDefault(); saveUserData({ username: document.getElementById('new-username').value, email: document.getElementById('new-email').value });" class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-2xl">
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">Username (Current)</span>
+                            <input type="text" id="current-username" class="pink-input mt-1 cursor-not-allowed bg-med-pink/50" readonly>
+                        </label>
+                        <label class="block">
+                            <span class="font-medium text-text-pink">E-mail (Current)</span>
+                            <input type="email" id="current-email" class="pink-input mt-1 cursor-not-allowed bg-med-pink/50" readonly>
+                        </label>
+
+                        <label class="block">
+                            <span class="font-medium text-text-pink">New Username</span>
+                            <input type="text" id="new-username" class="pink-input mt-1" placeholder="Enter New Username">
+                        </label>
+                        <label class="block">
+                            <span class="font-medium text-text-pink">New E-mail</span>
+                            <input type="email" id="new-email" class="pink-input mt-1" placeholder="Enter New E-mail">
+                        </label>
+                        
+                        <div class="md:col-span-2 pt-4 flex justify-start">
+                            <button type="submit" class="bg-dark-pink text-white px-8 py-3 rounded-xl font-semibold hover:bg-profile-icon transition-colors shadow-lg">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- 4. Change Password (The Key of Renewal) -->
+                <!-- ---------------------------------------------------- -->
+                <section id="change-password" class="profile-section">
+                    <form onsubmit="event.preventDefault(); alert('Password change simulated. Old password checked, new password saved.');" class="space-y-6 max-w-lg">
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">Old Password</span>
+                            <input type="password" id="old-password" class="pink-input mt-1" required>
+                        </label>
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">New Password</span>
+                            <input type="password" id="new-password" class="pink-input mt-1" required>
+                        </label>
+                        
+                        <label class="block">
+                            <span class="font-medium text-text-pink">Confirm New Password</span>
+                            <input type="password" id="confirm-new-password" class="pink-input mt-1" required>
+                        </label>
+                        
+                        <div class="pt-4">
+                            <button type="submit" class="bg-dark-pink text-white px-8 py-3 rounded-xl font-semibold hover:bg-profile-icon transition-colors shadow-lg">
+                                Save Changes
+                            </button>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- 5. Log Out (Exit the Realm) -->
+                <!-- ---------------------------------------------------- -->
+                <section id="log-out" class="profile-section flex flex-col items-center justify-center min-h-[400px]">
+                    <p class="text-xl font-bold text-text-pink mb-6 text-center">
+                        The enchantment fades — do you wish to depart the sanctum?
+                    </p>
+                    <div class="flex space-x-8">
+                        <button onclick="handleLogout()" class="bg-dark-pink text-white px-8 py-3 rounded-xl font-semibold hover:bg-profile-icon transition-colors shadow-lg">
+                            Yes
+                        </button>
+                        <button onclick="showSection('starlight-profile')" class="bg-dark-pink/50 text-white px-8 py-3 rounded-xl font-semibold hover:bg-dark-pink transition-colors shadow-lg">
+                            No
+                        </button>
+                    </div>
+                </section>
+
+                <!-- ---------------------------------------------------- -->
+                <!-- 6. Delete Account (Release to the Stars) -->
+                <!-- ---------------------------------------------------- -->
+                <section id="delete-account" class="profile-section flex flex-col items-center justify-center min-h-[400px]">
+                    <p class="text-xl font-bold text-text-pink mb-6 text-center">
+                        Your mark will be removed from the archives. <br> Do you choose to unweave your magic?
+                    </p>
+                    <div class="flex space-x-8">
+                        <button onclick="handleDeleteAccount()" class="bg-dark-pink text-white px-8 py-3 rounded-xl font-semibold hover:bg-profile-icon transition-colors shadow-lg">
+                            Yes
+                        </button>
+                        <button onclick="showSection('starlight-profile')" class="bg-dark-pink/50 text-white px-8 py-3 rounded-xl font-semibold hover:bg-dark-pink transition-colors shadow-lg">
+                            No
+                        </button>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Ensure Lucide icons are rendered
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engrave Your Name in the Aether - Register</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-dark': '#4A2066',     /* Dark Purple for text/accents */
+                        'primary-light': '#7D3C98',    /* Medium Purple */
+                        'bg-dark': '#5D3E7D',          /* Dark mystical background base */
+                        'card-bg': 'rgba(255, 255, 255, 0.95)', /* Nearly opaque white/light card */
+                        'gold-hands': '#FFD700',       /* Gold for hands */
+                        'gold-shadow': '#B8860B',      /* Darker gold outline */
+                        'button-bg': '#9B59B6',        /* Button purple */
+                        'button-hover': '#7D3C98',     /* Darker hover purple */
+                        'input-bg': '#F5F5F5',         /* Light gray input background */
+                        'aether-glow': '#DA70D6',      /* Orchid/Magenta for inner glow */
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Georgia', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* --- PIXIE DUST / STARFIELD BACKGROUND EFFECT --- */
+        @keyframes starry-drift {
+            0% { background-position: 0 0; }
+            100% { background-position: 500px 500px; }
+        }
+        
+        body {
+            background-color: #5D3E7D; 
+            font-family: 'Inter', sans-serif;
+            color: #7D3C98;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            
+            /* The Pixie Dust Magic Background */
+            background-image: 
+                radial-gradient(ellipse at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
+                radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
+                repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0px, transparent 1.5px),
+                linear-gradient(145deg, #7D3C98 0%, #4A2066 100%); /* Base gradient */
+
+            background-size: 500px 500px; 
+            animation: starry-drift 100s linear infinite; 
+        }
+
+        .header-strip {
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.1); 
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(5px);
+        }
+        
+        header {
+            background-color: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(5px); 
+            color: #FFD700;
+        }
+
+        /* Sign-In Title Style - Matching the provided image's font and glow */
+        .section-title {
+            font-family: 'Georgia', serif;
+            font-size: 2.5rem;
+            color: #DA70D6; /* Orchid/Magenta color */
+            text-shadow: 
+                0 0 10px #DA70D6, 
+                0 0 20px #9B59B6, 
+                2px 2px 0 #4A2066; /* Deep Purple 3D Shadow/Glow */
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        /* Input field styling */
+        .magic-input {
+            background-color: #F5F5F5; /* Light gray input background */
+            border: 1px solid #DA70D6; 
+            color: #4A2066;
+            padding: 0.75rem;
+            border-radius: 0.75rem; 
+            width: 100%;
+            transition: all 0.3s;
+            box-shadow: 0 0 5px rgba(218, 112, 214, 0.5); /* Soft pink glow */
+        }
+        .magic-input:focus {
+            border-color: #9B59B6; 
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.6);
+        }
+        
+        .magic-card {
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.95); 
+            border-radius: 1.5rem; 
+            border: 2px solid #DA70D6; /* Pink border */
+            box-shadow: 0 0 20px rgba(218, 112, 214, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5); 
+            z-index: 10; 
+        }
+
+        /* Positioning the hands container to cup the card */
+        .hands-container {
+            position: absolute;
+            top: 50%; 
+            /* Adjust translate Y to lift the hands up to cup the bottom of the card */
+            transform: translate(-50%, -20%); 
+            left: 50%;
+            width: 100%;
+            max-width: 500px; 
+            pointer-events: none;
+            z-index: 5; 
+        }
+        
+        .golden-hands {
+            fill: #FFD700; 
+            stroke: #B8860B; 
+            stroke-width: 2; 
+            opacity: 0.9;
+        }
+
+        /* Custom style for the Sign In/Register tabs */
+        .tab-button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center">
+
+    <!-- 1. Navigation Bar (From previous iteration) -->
+    <header class="shadow-lg w-full">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo and Name -->
+            <div class="flex items-center space-x-2">
+                <img src="https://placehold.co/40x40/9B59B6/FFFFFF?text=AB" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-yellow-300">
+                <h1 class="text-xl font-bold tracking-wider text-yellow-300">Alchemist's Brew</h1>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#" class="hover:text-yellow-300 transition-colors">Home</a>
+                <a href="#" class="hover:text-yellow-300 transition-colors">Menu</a>
+                <a href="#" class="hover:text-yellow-300 transition-colors">Study Room</a>
+                <a href="#" class="hover:text-yellow-300 transition-colors">Contact Us</a>
+            </nav>
+
+            <!-- Profile Dropdown -->
+            <div class="flex items-center space-x-4">
+                <button class="p-2">
+                    <i data-lucide="shopping-cart" class="w-5 h-5 text-white hover:text-yellow-300 transition-colors"></i>
+                </button>
+                <div class="flex items-center space-x-1 cursor-pointer group">
+                    <span class="text-sm font-semibold border-b border-white text-yellow-300">Sign In / Register</span>
+                    <i data-lucide="chevron-down" class="w-4 h-4 text-white group-hover:text-yellow-300 transition-colors"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Header Strip -->
+    <div class="header-strip w-full"></div>
+
+    <!-- 2. Main Registration Content Area -->
+    <main class="relative flex flex-grow items-center justify-center p-8 w-full overflow-hidden">
+        
+        <!-- Hands and Butterflies Container (Under the card) -->
+        <div class="hands-container max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
+            <!-- Golden Hands SVG -->
+            <svg class="golden-hands w-full h-auto" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
+                <path d="M 20 350 C 80 200, 150 150, 190 190 V 350 Z" />
+                <path d="M 380 350 C 320 200, 250 150, 210 190 V 350 Z" />
+                <!-- Rings/Glow -->
+                <circle cx="160" cy="200" r="5" fill="#FFFFFF" opacity="0.9" />
+                <circle cx="240" cy="200" r="5" fill="#FFFFFF" opacity="0.9" />
+            </svg>
+            
+            <!-- Butterflies -->
+            <div class="butterfly-left absolute" style="top: 15%; left: 0%; transform: rotate(-15deg);">
+                <i data-lucide="sparkles" class="w-8 h-8 text-yellow-300 drop-shadow-lg animate-pulse" style="color: #FFD700;"></i>
+                <img src="https://placehold.co/40x40/9B59B6/FFFFFF?text=🦋" alt="Butterfly" class="w-10 h-10 transform -translate-x-1/2">
+            </div>
+            <div class="butterfly-right absolute" style="top: 15%; right: 0%; transform: rotate(15deg);">
+                <i data-lucide="sparkles" class="w-8 h-8 text-yellow-300 drop-shadow-lg animate-pulse" style="color: #FFD700;"></i>
+                <img src="https://placehold.co/40x40/9B59B6/FFFFFF?text=🦋" alt="Butterfly" class="w-10 h-10 transform translate-x-1/2">
+            </div>
+        </div>
+
+        <!-- Registration Card (z-20 to be on top of hands) -->
+        <div class="magic-card w-full max-w-sm sm:max-w-md p-6 sm:p-10 z-20">
+            
+            <!-- Tab Navigation -->
+            <div class="flex justify-center mb-8 absolute top-[-25px] left-1/2 transform -translate-x-1/2 bg-white/50 backdrop-blur-sm rounded-full p-1 border border-primary-light shadow-lg">
+                <a href="sign_in.html" class="tab-button text-primary-dark hover:bg-primary-light hover:text-white transition-colors">Sign In</a>
+                <a href="register.html" class="tab-button bg-primary-dark text-white shadow-inner shadow-primary-light">Register</a>
+            </div>
+
+            <div class="text-center pt-8">
+                <!-- Title: Engrave Your Name in the Aether -->
+                <h2 class="section-title mb-8">Engrave Your Name in the Aether</h2>
+
+                <form onsubmit="event.preventDefault(); alert('Attempting to register new user.');" class="space-y-6">
+                    
+                    <label class="block">
+                        <span class="font-medium text-primary-dark block mb-1 text-left">Username</span>
+                        <input type="text" id="reg-username" class="magic-input" required placeholder="Choose your celestial name">
+                    </label>
+
+                    <label class="block">
+                        <span class="font-medium text-primary-dark block mb-1 text-left">Contact Number</span>
+                        <input type="tel" id="reg-contact" class="magic-input" required placeholder="Your earthly connection">
+                    </label>
+                    
+                    <label class="block">
+                        <span class="font-medium text-primary-dark block mb-1 text-left">Password</span>
+                        <input type="password" id="reg-password" class="magic-input" required placeholder="Create a secret key">
+                    </label>
+                    
+                    <div class="pt-6">
+                        <button type="submit" class="w-full bg-button-bg text-white py-3 rounded-xl font-semibold hover:bg-button-hover transition-colors shadow-xl text-lg tracking-wider">
+                            Sign Up
+                        </button>
+                    </div>
+
+                    <div class="text-sm text-center pt-2 text-primary-dark">
+                        Already enchanted? 
+                        <a href="signin.html" class="font-bold underline text-button-bg hover:text-button-hover transition-colors">Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Ensure Lucide icons are rendered
+        if (typeof lucide !== 'undefined') {
+            lucide.createIcons();
+        }
+    </script>
+</body>
+</html>

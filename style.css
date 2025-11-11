@@ -21,12 +21,13 @@
     --purple-purse-font: 'Purple Purse', cursive; 
     --heading-font: 'Playfair Display', serif;
     --body-font: 'Arial', sans-serif; 
+    --quando-font: 'Quando', serif;
 }
 
 /* Background color now uses the dynamic variable */
 body {
     background-color: var(--primary-pink); 
-    font-family: var(--body-font);
+    font-family: var(--quando-font);
     min-height: 100vh;
     color: var(--dark-text);
 }

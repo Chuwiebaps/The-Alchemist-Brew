@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alchemist's Brew - Celestial Menu</title>
+    <link rel="Icon" href="img/alchemist-icon.png">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&family=Quando&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS Variables for Dynamic Colors */
+        :root {
+            --primary-pink: #E0F7FA; /* Default: Strawberry Background */
+            --secondary-pink: #00BCD4; /* Default: Strawberry Accent (Button fill/border) */
+            --text-dark: #3f2f45; /* Dark purple/brown for text */
+            --font-serif: 'Playfair Display', serif;
+            --font-cursive: 'Purple Purse', cursive;
+            --menu-section-bg: #F4DCE3; 
+        }
+
+        /* --- GLOBAL & BODY STYLES (From your target CSS) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            font-family: 'Quando', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden; 
+            background-color: #e6f3f8; /* Kept the light blue background from old style for visibility */
+        }
+        
+        /* --- NAVBAR (From your target CSS) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--primary-pink); 
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: var(--font-cursive);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            /* Note: 'var(transparent)' is invalid. Using 'transparent' directly. */
+            background-color: transparent; 
+            border-radius: 50%;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 5px 10px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-item.current {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-pink);
+            text-underline-offset: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-button {
+            border: 1px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 5px 15px;
+            background-color: transparent;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            /* Using a simple emoji/text for the cart icon since Lucide was removed */
+            color: var(--text-dark); 
+        }
+
+        .register-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary-pink);
+            color: var(--text-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-cursive);
+            font-size: 16px;
+        }
+        
+        .dropdown-arrow-link {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .dropdown-arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-dark);
+            transform: translateY(2px);
+        }
+        
+        /* Custom styling for the main "Celestial Menu" title to mimic the graphic */
+        .celestial-title {
+        font-family: 'Purple Purse';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 80px;
+        line-height: 100px;
+        text-align: center;
+        color: #00BCD4;
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Style for the active category button */
+        .category-button.active {
+            background-color: var(--secondary-pink); /* Using your defined variable */
+            color: white; /* Changed for better contrast */
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-button:hover {
+            background-color: #f0f0f0; /* Light hover effect for non-active */
+        }
+        
+    </style>
+</head>
+<body class="font-sans min-h-screen">
+
+    <header class="navbar">
+        <a href="index.html" class="logo-container"> 
+            <img src="img/alchemist-icon.png" alt="Alchemist's Brew Logo Icon" class="logo-icon">
+            <span class="logo-text">Alchemist's Brew</span>
+        </a>
+        
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="menu.html" class="nav-item current">Menu</a> <a href="studyroom.html" class="nav-item">Study Room</a>
+            <a href="contactus.html" class="nav-item contact-button">Contact Us</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="shoppingcart.html" class="cart-icon">🛒</a> 
+            
+            <a href="register.html" class="register-btn">Sign In / Register</a>
+            
+            <a href="profile.html" class="dropdown-arrow-link">
+                <span class="dropdown-arrow"></span>
+            </a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h2 class="celestial-title">Celestial Menu</h2>
+        </div>
+
+        <div id="category-tabs" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
+            </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            </div>
+    </main>
+
+    <script>
+        // NOTE: The Tailwind color names (deep-teal, light-bg, etc.) 
+        // in the JS need to be replaced by the custom class names or CSS variables.
+        // For simplicity, we are removing the Tailwind dependencies entirely.
+        
+        // --- Data Structure for Menu Items (Unchanged) ---
+        const MENU_DATA = [
+             // ... Your MENU_DATA array is here ...
+             { id: 1, name: "The Midas Touch", category: "COFFEE", price: "180.00", description: "A truly magical concoction...", imageUrl: "https://placehold.co/400x300/e8d69f/457b9d?text=Iced+Caramel+Drink" }, 
+             { id: 2, name: "Aetherial Cold Brew", category: "COFFEE", price: "180.00", description: "This dark brew is aged under starlight...", imageUrl: "https://placehold.co/400x300/503f36/f1faee?text=Dark+Iced+Coffee" }, 
+             // ... and so on ...
+             { id: 5, name: "The Midas Touch (Iced)", category: "COFFEE", price: "180.00", description: "A truly magical concoction...", imageUrl: "https://placehold.co/400x300/e8d69f/457b9d?text=Iced+Coffee+in+Tall+Glass" }, 
+             
+             { id: 6, name: "Elixir of Life", category: "NON-COFFEE", price: "160.00", description: "A refreshing blend of sparkling lemonade...", imageUrl: "https://placehold.co/400x300/98c1d9/1d3557?text=Elixir+of+Life" },
+             // ...
+             { id: 12, name: "Mana Muffin", category: "PASTRIES", price: "110.00", description: "A blueberry muffin infused with pure energy...", imageUrl: "https://placehold.co/400x300/94d2bd/1d3557?text=Mana+Muffin" },
+        ];
+
+        // Unique categories list
+        const CATEGORIES = [...new Set(MENU_DATA.map(item => item.category))];
+        const productGrid = document.getElementById('product-grid');
+        const categoryTabs = document.getElementById('category-tabs');
+        let currentCategory = CATEGORIES[0]; // Start with the first category
+
+        /**
+         * Renders the product card for a single menu item.
+         * NOTE: All Tailwind classes here should ideally be replaced with custom CSS classes.
+         * For now, we leave the Tailwind classes in the card function, as replacing them 
+         * would require defining many new utility classes in the CSS.
+         * @param {Object} item - The menu item data.
+         * @returns {string} - The HTML string for the product card.
+         */
+        function createProductCard(item) {
+             // WARNING: These still use Tailwind classes (bg-light-bg, text-deep-teal, etc.)
+             // If you want pure custom CSS, you'd need to define classes for shadow-lg, flex, etc.
+            return `
+                <div class="bg-light-bg rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="h-48">
+                        <img src="${item.imageUrl}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/333333?text=Image+Unavailable';" loading="lazy">
+                    </div>
+                    
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-deep-teal mb-2">${item.name}</h3>
+                        <p class="text-xs text-gray-600 flex-grow mb-3">${item.description}</p>
+                        
+                        <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-200">
+                            <span class="text-2xl font-extrabold text-caramel-gold">₱${item.price}</span>
+                            <button class="bg-caramel-gold text-dark-bg p-3 rounded-full hover:bg-yellow-600 transition-all duration-200 shadow-md transform hover:scale-105" aria-label="Add ${item.name} to cart">
+                                <span class="text-lg">🛒</span> 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Filters the data and renders the menu items to the grid.
+         * @param {string} category - The category to filter by.
+         */
+        function renderMenu(category) {
+            productGrid.innerHTML = ''; // Clear existing content
+            const filteredItems = MENU_DATA.filter(item => item.category === category);
+            
+            if (filteredItems.length === 0) {
+                // Tailwind classes are kept here for layout
+                productGrid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-xl py-10">No magical concoctions found in this category yet!</p>';
+                return;
+            }
+
+            const html = filteredItems.map(createProductCard).join('');
+            productGrid.innerHTML = html;
+            // Removed lucide.createIcons();
+        }
+
+        /**
+         * Handles the category button click, updating the UI and rendering the menu.
+         * NOTE: Tailwind class logic is removed, using only the custom 'active' class.
+         * @param {string} category - The category selected.
+         */
+        function selectCategory(category) {
+            currentCategory = category;
+            
+            // Update active state of buttons
+            document.querySelectorAll('.category-button').forEach(button => {
+                // Remove all color/active state classes (only 'active' custom class remains)
+                button.classList.remove('active');
+            });
+            
+            // Set active state for the clicked button using the custom 'active' class
+            const activeButton = document.getElementById(`btn-${category.replace(/\s+/g, '-')}`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+
+            renderMenu(category);
+        }
+
+        /**
+         * Initializes the category buttons in the DOM.
+         */
+        function initializeTabs() {
+            const tabsHtml = CATEGORIES.map(category => {
+                // Ensure unique ID for buttons
+                const id = `btn-${category.replace(/\s+/g, '-')}`; 
+                return `
+                    <button id="${id}"
+                            class="category-button px-6 py-2 rounded-full font-semibold text-sm uppercase tracking-wide transition-all duration-300 shadow-md
+                                bg-white text-deep-teal hover:bg-celestial-blue"
+                            onclick="selectCategory('${category}')">
+                        ${category}
+                    </button>
+                `;
+            }).join('');
+            categoryTabs.innerHTML = tabsHtml;
+
+            // Trigger the initial selection of the first category
+            if (CATEGORIES.length > 0) {
+                selectCategory(CATEGORIES[0]);
+            }
+        }
+
+        // Initialize the app when the window loads
+        window.onload = function() {
+            initializeTabs();
+            // Removed lucide.createIcons();
+        };
+   <main class="container mx-auto px-4 py-8">
+        <div class="text-center mb-8">
+            <h2 class="celestial-title">Celestial Menu</h2>
+        </div>
+
+        <div id="category-tabs" class="flex flex-wrap justify-center gap-2 md:gap-4 mb-12">
+            </div>
+
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            </div>
+    </main>
+
+    <script>
+        // NOTE: The Tailwind color names (deep-teal, light-bg, etc.) 
+        // in the JS need to be replaced by the custom class names or CSS variables.
+        // For simplicity, we are removing the Tailwind dependencies entirely.
+        
+        // --- Data Structure for Menu Items (Unchanged) ---
+        const MENU_DATA = [
+             // ... Your MENU_DATA array is here ...
+             { id: 1, name: "The Midas Touch", category: "COFFEE", price: "180.00", description: "A truly magical concoction...", imageUrl: "https://placehold.co/400x300/e8d69f/457b9d?text=Iced+Caramel+Drink" }, 
+             { id: 2, name: "Aetherial Cold Brew", category: "COFFEE", price: "180.00", description: "This dark brew is aged under starlight...", imageUrl: "https://placehold.co/400x300/503f36/f1faee?text=Dark+Iced+Coffee" }, 
+             // ... and so on ...
+             { id: 5, name: "The Midas Touch (Iced)", category: "COFFEE", price: "180.00", description: "A truly magical concoction...", imageUrl: "https://placehold.co/400x300/e8d69f/457b9d?text=Iced+Coffee+in+Tall+Glass" }, 
+             
+             { id: 6, name: "Elixir of Life", category: "NON-COFFEE", price: "160.00", description: "A refreshing blend of sparkling lemonade...", imageUrl: "https://placehold.co/400x300/98c1d9/1d3557?text=Elixir+of+Life" },
+             // ...
+             { id: 12, name: "Mana Muffin", category: "PASTRIES", price: "110.00", description: "A blueberry muffin infused with pure energy...", imageUrl: "https://placehold.co/400x300/94d2bd/1d3557?text=Mana+Muffin" },
+        ];
+
+        // Unique categories list
+        const CATEGORIES = [...new Set(MENU_DATA.map(item => item.category))];
+        const productGrid = document.getElementById('product-grid');
+        const categoryTabs = document.getElementById('category-tabs');
+        let currentCategory = CATEGORIES[0]; // Start with the first category
+
+        /**
+         * Renders the product card for a single menu item.
+         * NOTE: All Tailwind classes here should ideally be replaced with custom CSS classes.
+         * For now, we leave the Tailwind classes in the card function, as replacing them 
+         * would require defining many new utility classes in the CSS.
+         * @param {Object} item - The menu item data.
+         * @returns {string} - The HTML string for the product card.
+         */
+        function createProductCard(item) {
+             // WARNING: These still use Tailwind classes (bg-light-bg, text-deep-teal, etc.)
+             // If you want pure custom CSS, you'd need to define classes for shadow-lg, flex, etc.
+            return `
+                <div class="bg-light-bg rounded-xl shadow-lg overflow-hidden flex flex-col transition-transform duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div class="h-48">
+                        <img src="${item.imageUrl}" alt="${item.name}" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x300/cccccc/333333?text=Image+Unavailable';" loading="lazy">
+                    </div>
+                    
+                    <div class="p-4 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-deep-teal mb-2">${item.name}</h3>
+                        <p class="text-xs text-gray-600 flex-grow mb-3">${item.description}</p>
+                        
+                        <div class="flex justify-between items-center mt-auto pt-2 border-t border-gray-200">
+                            <span class="text-2xl font-extrabold text-caramel-gold">₱${item.price}</span>
+                            <button class="bg-caramel-gold text-dark-bg p-3 rounded-full hover:bg-yellow-600 transition-all duration-200 shadow-md transform hover:scale-105" aria-label="Add ${item.name} to cart">
+                                <span class="text-lg">🛒</span> 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /**
+         * Filters the data and renders the menu items to the grid.
+         * @param {string} category - The category to filter by.
+         */
+        function renderMenu(category) {
+            productGrid.innerHTML = ''; // Clear existing content
+            const filteredItems = MENU_DATA.filter(item => item.category === category);
+            
+            if (filteredItems.length === 0) {
+                // Tailwind classes are kept here for layout
+                productGrid.innerHTML = '<p class="col-span-full text-center text-gray-500 text-xl py-10">No magical concoctions found in this category yet!</p>';
+                return;
+            }
+
+            const html = filteredItems.map(createProductCard).join('');
+            productGrid.innerHTML = html;
+            // Removed lucide.createIcons();
+        }
+
+        /**
+         * Handles the category button click, updating the UI and rendering the menu.
+         * NOTE: Tailwind class logic is removed, using only the custom 'active' class.
+         * @param {string} category - The category selected.
+         */
+        function selectCategory(category) {
+            currentCategory = category;
+            
+            // Update active state of buttons
+            document.querySelectorAll('.category-button').forEach(button => {
+                // Remove all color/active state classes (only 'active' custom class remains)
+                button.classList.remove('active');
+            });
+            
+            // Set active state for the clicked button using the custom 'active' class
+            const activeButton = document.getElementById(`btn-${category.replace(/\s+/g, '-')}`);
+            if (activeButton) {
+                activeButton.classList.add('active');
+            }
+
+            renderMenu(category);
+        }
+
+        /**
+         * Initializes the category buttons in the DOM.
+         */
+        function initializeTabs() {
+            const tabsHtml = CATEGORIES.map(category => {
+                // Ensure unique ID for buttons
+                const id = `btn-${category.replace(/\s+/g, '-')}`; 
+                return `
+                    <button id="${id}"
+                            class="category-button px-6 py-2 rounded-full font-semibold text-sm uppercase tracking-wide transition-all duration-300 shadow-md
+                                bg-white text-deep-teal hover:bg-celestial-blue"
+                            onclick="selectCategory('${category}')">
+                        ${category}
+                    </button>
+                `;
+            }).join('');
+            categoryTabs.innerHTML = tabsHtml;
+
+            // Trigger the initial selection of the first category
+            if (CATEGORIES.length > 0) {
+                selectCategory(CATEGORIES[0]);
+            }
+        }
+
+        // Initialize the app when the window loads
+        window.onload = function() {
+            initializeTabs();
+            // Removed lucide.createIcons();
+        };
+    </script>
+</body>
+</html>

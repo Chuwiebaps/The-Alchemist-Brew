@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact the Apothecary - Alchemist's Brew</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Load Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Custom Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-lilac': '#B192C2', /* Light Purple for accents/inputs */
+                        'deep-violet': '#6B4F83',  /* Darker Purple for text/shadow */
+                        'header-pink': '#E8DCEB',  /* Very Light Pink/Purple for header strip */
+                        'off-white': '#FAF9F6',   /* Main background color */
+                        'cream-bg': '#F7F2F9',    /* Main content background */
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Georgia', 'serif'], /* Matching the serif look of the main title */
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* General body background */
+        body {
+            background-color: var(--off-white);
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Header strip below the nav bar */
+        .header-strip {
+            height: 30px;
+            background-color: var(--header-pink);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        }
+
+        /* Styling for the main "Contact the Apothecary" title */
+        .apothecary-title {
+            font-family: 'Georgia', serif;
+            font-size: 2.8rem;
+            color: #B192C2; /* Primary Lilac */
+            text-shadow: 2px 2px 0 #6B4F83; /* Deep Violet 3D Shadow */
+            letter-spacing: 0.05em;
+            font-weight: 700;
+        }
+
+        /* Contact Info/Get in Touch title */
+        .contact-us-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #6B4F83;
+        }
+
+        /* Custom input styling to match the purple rounded look */
+        .custom-input {
+            background-color: rgba(177, 146, 194, 0.15); /* Light transparent lilac */
+            border: none;
+            outline: none;
+            padding: 1rem;
+            border-radius: 0.75rem; /* rounded-xl */
+            transition: all 0.2s;
+        }
+        .custom-input:focus {
+            box-shadow: 0 0 0 2px #B192C2; /* Focus ring matching the primary color */
+            background-color: white;
+        }
+
+        /* Social media icon styling */
+        .social-icon {
+            color: #6B4F83;
+            transition: color 0.2s;
+        }
+        .social-icon:hover {
+            color: #B192C2;
+            transform: scale(1.1);
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            .apothecary-title {
+                font-size: 4rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <!-- 1. Navigation Bar (Recreated based on images) -->
+    <header class="bg-header-pink shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center text-deep-violet">
+            <!-- Logo and Name -->
+            <div class="flex items-center space-x-2">
+                <img src="https://placehold.co/40x40/E8DCEB/6B4F83?text=A" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-primary-lilac">
+                <h1 class="text-xl font-bold tracking-wider">Alchemist's Brew</h1>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="#" class="hover:text-primary-lilac transition-colors">Home</a>
+                <a href="#" class="hover:text-primary-lilac transition-colors">Menu</a>
+                <a href="#" class="hover:text-primary-lilac transition-colors">Study Room</a>
+                <a href="#" class="border-b-2 border-deep-violet pb-1 font-bold">Contact Us</a>
+            </nav>
+
+            <!-- Cart and Sign In -->
+            <div class="flex items-center space-x-4">
+                <button class="p-2 rounded-full hover:bg-deep-violet/10 transition-colors">
+                    <i data-lucide="shopping-cart" class="w-5 h-5 text-deep-violet"></i>
+                </button>
+                <button class="bg-primary-lilac text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-deep-violet transition-colors shadow-md flex items-center">
+                    Sign In / Register
+                    <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Header Strip -->
+    <div class="header-strip"></div>
+
+    <main class="container mx-auto px-4 py-12 bg-cream-bg shadow-xl rounded-xl">
+        <!-- Main Title -->
+        <div class="text-center mb-12">
+            <h2 class="apothecary-title inline-block">Contact the Apothecary</h2>
+        </div>
+
+        <!-- Two-Column Contact Layout -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+
+            <!-- LEFT COLUMN: Contact Form -->
+            <div class="space-y-6">
+                <form class="space-y-8">
+                    <!-- Full Name -->
+                    <label class="block">
+                        <p class="font-medium text-deep-violet mb-2">Your Full Name</p>
+                        <input type="text" placeholder="Enter your full name" class="custom-input w-full rounded-xl" required>
+                    </label>
+
+                    <!-- Email Address -->
+                    <label class="block">
+                        <p class="font-medium text-deep-violet mb-2">Your Email Address</p>
+                        <input type="email" placeholder="Enter your email address" class="custom-input w-full rounded-xl" required>
+                    </label>
+
+                    <!-- Subject -->
+                    <label class="block">
+                        <p class="font-medium text-deep-violet mb-2">Your Subject</p>
+                        <input type="text" placeholder="What is your message about?" class="custom-input w-full rounded-xl" required>
+                    </label>
+
+                    <!-- Message -->
+                    <label class="block">
+                        <p class="font-medium text-deep-violet mb-2">Your Message</p>
+                        <textarea placeholder="Write your detailed message here..." rows="6" class="custom-input w-full rounded-xl resize-none" required></textarea>
+                    </label>
+
+                    <!-- Send Message Button -->
+                    <div>
+                        <button type="submit" onclick="alert('Message Sent (Demo)')" class="px-8 py-3 bg-primary-lilac text-white font-semibold rounded-xl shadow-lg hover:bg-deep-violet transition-colors">
+                            Send Message
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- RIGHT COLUMN: Contact Information and Socials -->
+            <div class="space-y-10 mt-6 lg:mt-0">
+                <div class="space-y-4">
+                    <h3 class="text-xl font-bold text-deep-violet">Contact Us</h3>
+                    <h2 class="contact-us-title">Get in Touch</h2>
+                    <p class="text-deep-violet/80 leading-relaxed text-sm">
+                        Your whispers of wonder, ideas, and inquiries are the secret ingredients that
+                        fuel our next brew. We hold the connection with our fellow travelers and
+                        kindred spirits in high regard! Don't hesitate to unfurl the scroll and send us
+                        your message, whether it's a grand quest or a tiny twinkle of curiosity. You
+                        may entrust your message to the secure form below, or find us instantly
+                        where the digital constellations align.
+                    </p>
+                </div>
+
+                <!-- Contact Details Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    
+                    <!-- Call Us -->
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="phone" class="w-6 h-6 text-primary-lilac mt-1 flex-shrink-0"></i>
+                        <div>
+                            <p class="font-semibold text-deep-violet">Call Us</p>
+                            <p class="text-sm">+63 9876543210</p>
+                        </div>
+                    </div>
+
+                    <!-- Email Us -->
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="mail" class="w-6 h-6 text-primary-lilac mt-1 flex-shrink-0"></i>
+                        <div>
+                            <p class="font-semibold text-deep-violet">Email Us</p>
+                            <p class="text-sm">alchemistbrew@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Website -->
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="globe" class="w-6 h-6 text-primary-lilac mt-1 flex-shrink-0"></i>
+                        <div>
+                            <p class="font-semibold text-deep-violet">Website</p>
+                            <p class="text-sm">www.alchemistbrew.com</p>
+                        </div>
+                    </div>
+
+                    <!-- Address -->
+                    <div class="flex items-start space-x-3">
+                        <i data-lucide="map-pin" class="w-6 h-6 text-primary-lilac mt-1 flex-shrink-0"></i>
+                        <div>
+                            <p class="font-semibold text-deep-violet">Address</p>
+                            <p class="text-sm">España, Manila</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Social Media Links -->
+                <div class="pt-4 border-t border-primary-lilac/50">
+                    <p class="text-lg font-bold text-deep-violet mb-4">Follows Us On</p>
+                    <div class="flex space-x-6">
+                        <a href="https://www.facebook.com" target="_blank" aria-label="Facebook">
+                            <i data-lucide="facebook" class="w-8 h-8 social-icon"></i>
+                        </a>
+                        <a href="https://www.instagram.com" target="_blank" aria-label="Instagram">
+                            <i data-lucide="instagram" class="w-8 h-8 social-icon"></i>
+                        </a>
+                        <a href="https://www.tiktok.com" target="_blank" aria-label="TikTok">
+                            <!-- Using custom SVG for a more distinct TikTok icon style -->
+                            <svg class="w-8 h-8 social-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16.92 6.08a.987.987 0 0 0-.61-.31A1.002 1.002 0 0 0 16 6.1v4.44a4.986 4.986 0 0 1-5 5c-2.76 0-5-2.24-5-5s2.24-5 5-5c.17 0 .34.02.5.05v-2a6.974 6.974 0 0 0-5.5-.05c-3.86 0-7 3.14-7 7s3.14 7 7 7 7-3.14 7-7v-3.69c.67.24 1.45.39 2.18.39 1.95 0 3.54-1.59 3.54-3.54a3.483 3.483 0 0 0-3.54-3.54z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        window.onload = function() {
+            // Initialize lucide icons
+            lucide.createIcons();
+            
+            // This is a front-end demo; form submission is prevented here.
+            document.querySelector('form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                console.log('Form submission intercepted. Data can be sent to a server from here.');
+                // Using alert() as a required alternative for confirmation message in this context
+                alert('Thank you for contacting the Apothecary! Your message has been prepared for delivery.'); 
+            });
+        };
+    </script>
+</body>
+</html>
