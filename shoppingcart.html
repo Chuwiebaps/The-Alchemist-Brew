@@ -9,15 +9,27 @@
     <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Custom Tailwind Configuration -->
+    <link rel="Icon" href="img/alchemist-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Purple+Purse&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
                         'sage': '#D3E7D3',        /* Light Green/Sage for Main Background */
-                        'dark-sage': '#9FB89F',   /* Darker Green/Sage for Borders/Text */
+                        'dark-sage': '#184E1A',   /* Darker Green/Sage for Borders/Text */
                         'light-sage-bg': '#F0F8F0', /* Off-White/Lightest Background */
-                        'text-dark': '#4D624D',   /* Dark Text Color */
+                        'text-dark': '#184E1A',   /* Dark Text Color */
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -28,29 +40,152 @@
         }
     </script>
     <style>
-        body {
-            background-color: var(--light-sage-bg);
-            font-family: 'Inter', sans-serif;
-            color: #4D624D;
+        /* CSS Variables for Dynamic Colors (Adjusted to your Tailwind palette) */
+        :root {
+            --primary-pink: #fdf8e8; /* light-bg (Parchment color) */
+            --secondary-pink: #B77F70; /* deep-teal (Accent) */
+            --text-dark: #79554B; /* dark-bg for text */
+            --font-serif: 'Playfair Display', serif;
+            --font-cursive: 'Purple Purse', cursive;
+            
+            /* Color for the new Menu Preview section background */
+            --menu-section-bg: #F4DCE3;
         }
 
-        /* Header strip below the nav bar */
-        .header-strip {
-            height: 30px;
-            background-color: #E6EFE6; /* Lighter Sage */
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        /* --- GLOBAL & BODY STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
         }
+
+        body {
+            background-color: #cbecc7; /* Existing body color */
+            font-family: 'Quando', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: rgba(209, 235, 200, 0.863);
+            color: #4caf8e;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: var(--font-cursive);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: transparent;
+            border-radius: 50%;
+            /* Styling the SVG icon color to match the theme */
+            color: var(--secondary-pink); 
+            stroke: var(--secondary-pink);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 5px 10px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-item.current {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-pink);
+            text-underline-offset: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-button {
+            border: 1px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 5px 15px;
+            background-color: transparent;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .register-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary-pink);
+            color: var(--text-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-cursive);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            background-color: var(--secondary-pink);
+            color: var(--primary-pink);
+        }
+
+        .dropdown-arrow-link {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .dropdown-arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-dark);
+            transform: translateY(2px);
+        }
+        
 
         /* Styling for the main "The Alchemist's Stock" title */
         .apothecary-title {
-            font-family: 'Georgia', serif;
-            font-size: 2.8rem;
-            color: #9FB89F; /* Dark Sage */
-            text-shadow: 2px 2px 0 #D3E7D3; /* Light Sage 3D Shadow */
-            letter-spacing: 0.05em;
-            font-weight: 700;
-        }
+            font-family: 'Purple Purse';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 80px;
+            line-height: 100px;
+            text-align: center;
 
+            color: rgba(10, 99, 13, 0.838);
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+        }
         /* Table header styling */
         .table-header {
             background-color: #9FB89F;
@@ -444,7 +579,7 @@
             if (summary.couponApplied) {
                 msg = "The Coupon was successfully accepted by the stock keeper!";
             } else if (document.getElementById('coupon-input').value.trim() === '') {
-                 msg = "Please enter a Coupon Code to apply a discount.";
+                msg = "Please enter a Coupon Code to apply a discount.";
             } else {
                 msg = "The alchemical formula (Coupon Code) is incorrect or expired.";
             }
@@ -467,32 +602,30 @@
     </script>
 
     <!-- 1. Navigation Bar (Using the style from previous pages) -->
-    <header class="bg-sage shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center text-text-dark">
-            <!-- Logo and Name -->
-            <div class="flex items-center space-x-2">
-                <img src="https://placehold.co/40x40/E6EFE6/4D624D?text=A" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-dark-sage">
-                <h1 class="text-xl font-bold tracking-wider">Alchemist's Brew</h1>
-            </div>
+    <header class="navbar">
+            <a href="index.html" class="logo-container"> 
+            <img src="img/alchemist-icon.png" alt="Alchemist's Brew Logo Icon" class="logo-icon">
+            <span class="logo-text">Alchemist's Brew</span>
+        </a>
+            
             
             <!-- Navigation Links -->
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" class="hover:text-dark-sage transition-colors">Home</a>
-                <a href="#" class="hover:text-dark-sage transition-colors">Menu</a>
-                <a href="#" class="hover:text-dark-sage transition-colors">Study Room</a>
-                <a href="#" class="hover:text-dark-sage transition-colors">Contact Us</a>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="menu.html" class="nav-item">Menu</a> 
+            <a href="studyroom.html" class="nav-item ">Study Room</a>
+            <a href="contactus.html" class="nav-item contact-button">Contact Us</a>
             </nav>
 
-            <!-- Cart and Sign In -->
-            <div class="flex items-center space-x-4">
-                <button class="p-2 rounded-full border-b-2 border-dark-sage">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 text-dark-sage"></i>
-                </button>
-                <button class="bg-dark-sage text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-text-dark transition-colors shadow-md flex items-center">
-                    Sign In / Register
-                    <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
-                </button>
-            </div>
+        <div class="nav-actions">
+            <a href="shoppingcart.html" class="nav-item cart-icon current">🛒</a> 
+            
+            <a href="signin.html" class="register-btn">Sign In / Register</a>
+            
+            <a href="profile.html" class="dropdown-arrow-link">
+                <span class="dropdown-arrow"></span>
+            </a>
+        </div>
         </div>
     </header>
     

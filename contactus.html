@@ -9,6 +9,17 @@
     <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Custom Tailwind Configuration -->
+    <link rel="Icon" href="img/alchemist-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Purple+Purse&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
@@ -29,35 +40,165 @@
         }
     </script>
     <style>
-        /* General body background */
+        /* CSS Variables for Dynamic Colors (Adjusted to your Tailwind palette) */
+        :root {
+            --primary-pink: #fdf8e8; /* light-bg (Parchment color) */
+            --secondary-pink: #B77F70; /* deep-teal (Accent) */
+            --text-dark: #79554B; /* dark-bg for text */
+            --font-serif: 'Playfair Display', serif;
+            --font-cursive: 'Purple Purse', cursive;
+            
+            /* Color for the new Menu Preview section background */
+            --menu-section-bg: #F4DCE3;
+        }
+
+        /* --- GLOBAL & BODY STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
         body {
-            background-color: var(--off-white);
-            font-family: 'Inter', sans-serif;
+            background-color: #F7F2F9; /* Existing body color */
+            font-family: 'Quando', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
         }
 
-        /* Header strip below the nav bar */
-        .header-strip {
-            height: 30px;
-            background-color: var(--header-pink);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: rgba(238, 192, 245, 0.826);
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: var(--font-cursive);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
 
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: transparent;
+            border-radius: 50%;
+            /* Styling the SVG icon color to match the theme */
+            color: var(--secondary-pink); 
+            stroke: var(--secondary-pink);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 5px 10px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-item.current {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-pink);
+            text-underline-offset: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-button {
+            border: 1px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 5px 15px;
+            background-color: transparent;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .register-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary-pink);
+            color: var(--text-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-cursive);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            background-color: var(--secondary-pink);
+            color: var(--primary-pink);
+        }
+
+        .dropdown-arrow-link {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .dropdown-arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-dark);
+            transform: translateY(2px);
+        }
+        
+        
         /* Styling for the main "Contact the Apothecary" title */
         .apothecary-title {
-            font-family: 'Georgia', serif;
-            font-size: 2.8rem;
-            color: #B192C2; /* Primary Lilac */
-            text-shadow: 2px 2px 0 #6B4F83; /* Deep Violet 3D Shadow */
-            letter-spacing: 0.05em;
-            font-weight: 700;
+            font-family: 'Purple Purse';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 80px;
+            line-height: 100px;
+            text-align: center;
+
+            color: #5f2867;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.7);           
         }
+
 
         /* Contact Info/Get in Touch title */
         .contact-us-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #6B4F83;
+            font-family: 'Purple Purse';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 70px;
+            line-height: 100px;
+
+            color: #3A0F41;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
+
 
         /* Custom input styling to match the purple rounded look */
         .custom-input {
@@ -67,10 +208,6 @@
             padding: 1rem;
             border-radius: 0.75rem; /* rounded-xl */
             transition: all 0.2s;
-        }
-        .custom-input:focus {
-            box-shadow: 0 0 0 2px #B192C2; /* Focus ring matching the primary color */
-            background-color: white;
         }
 
         /* Social media icon styling */
@@ -83,52 +220,40 @@
             transform: scale(1.1);
         }
 
-        /* Responsive adjustments */
-        @media (min-width: 768px) {
-            .apothecary-title {
-                font-size: 4rem;
-            }
-        }
     </style>
 </head>
 <body class="min-h-screen">
 
     <!-- 1. Navigation Bar (Recreated based on images) -->
-    <header class="bg-header-pink shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center text-deep-violet">
-            <!-- Logo and Name -->
-            <div class="flex items-center space-x-2">
-                <img src="https://placehold.co/40x40/E8DCEB/6B4F83?text=A" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-primary-lilac">
-                <h1 class="text-xl font-bold tracking-wider">Alchemist's Brew</h1>
-            </div>
+    <header class="navbar">
+            <a href="index.html" class="logo-container"> 
+            <img src="img/alchemist-icon.png" alt="Alchemist's Brew Logo Icon" class="logo-icon">
+            <span class="logo-text">Alchemist's Brew</span>
+        </a>
             
             <!-- Navigation Links -->
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" class="hover:text-primary-lilac transition-colors">Home</a>
-                <a href="#" class="hover:text-primary-lilac transition-colors">Menu</a>
-                <a href="#" class="hover:text-primary-lilac transition-colors">Study Room</a>
-                <a href="#" class="border-b-2 border-deep-violet pb-1 font-bold">Contact Us</a>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="menu.html" class="nav-item">Menu</a> 
+            <a href="studyroom.html" class="nav-item ">Study Room</a>
+            <a href="contactus.html" class="nav-item contact-button current">Contact Us</a>
             </nav>
 
-            <!-- Cart and Sign In -->
-            <div class="flex items-center space-x-4">
-                <button class="p-2 rounded-full hover:bg-deep-violet/10 transition-colors">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 text-deep-violet"></i>
-                </button>
-                <button class="bg-primary-lilac text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-deep-violet transition-colors shadow-md flex items-center">
-                    Sign In / Register
-                    <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
-                </button>
-            </div>
+        <div class="nav-actions">
+            <a href="shoppingcart.html" class="cart-icon">🛒</a> 
+            
+            <a href="signin.html" class="register-btn">Sign In / Register</a>
+            
+            <a href="profile.html" class="dropdown-arrow-link">
+                <span class="dropdown-arrow"></span>
+            </a>
+        </div>
         </div>
     </header>
-    
-    <!-- Header Strip -->
-    <div class="header-strip"></div>
 
-    <main class="container mx-auto px-4 py-12 bg-cream-bg shadow-xl rounded-xl">
+    <main class="container mx-auto px-4 py-8 bg-cream-bg">
         <!-- Main Title -->
-        <div class="text-center mb-12">
+        <div class="text-center mb-10">
             <h2 class="apothecary-title inline-block">Contact the Apothecary</h2>
         </div>
 

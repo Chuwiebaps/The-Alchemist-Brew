@@ -9,19 +9,31 @@
     <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Custom Tailwind Configuration -->
+    <link rel="Icon" href="img/alchemist-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Purple+Purse&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'primary-dark': '#4A2066',     /* Dark Purple for text/accents */
-                        'primary-light': '#7D3C98',    /* Medium Purple */
+                        'primary-dark': '#00BCD4',     /* Dark Purple for text/accents */
+                        'primary-light': '#00BCD4',    /* Medium Purple */
                         'bg-dark': '#5D3E7D',          /* Dark mystical background base */
                         'card-bg': 'rgba(255, 255, 255, 0.95)', /* Nearly opaque white/light card */
                         'gold-hands': '#FFD700',       /* Gold for hands */
                         'gold-shadow': '#B8860B',      /* Darker gold outline */
-                        'button-bg': '#9B59B6',        /* Button purple */
-                        'button-hover': '#7D3C98',     /* Darker hover purple */
+                        'button-bg': '#00BCD4',        /* Button purple */
+                        'button-hover': '#00BCD4',     /* Darker hover purple */
                         'input-bg': '#F5F5F5',         /* Light gray input background */
                         'aether-glow': '#DA70D6',      /* Orchid/Magenta for inner glow */
                     },
@@ -34,80 +46,179 @@
         }
     </script>
     <style>
-        /* --- PIXIE DUST / STARFIELD BACKGROUND EFFECT --- */
-        @keyframes starry-drift {
-            0% { background-position: 0 0; }
-            100% { background-position: 500px 500px; }
-        }
-        
-        body {
-            background-color: #5D3E7D; 
-            font-family: 'Inter', sans-serif;
-            color: #7D3C98;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
+        /* CSS Variables for Dynamic Colors (Adjusted to your Tailwind palette) */
+        :root {
+            --primary-pink: #fdf8e8; /* light-bg (Parchment color) */
+            --secondary-pink: #B77F70; /* deep-teal (Accent) */
+            --text-dark: #79554B; /* dark-bg for text */
+            --font-serif: 'Playfair Display', serif;
+            --font-cursive: 'Purple Purse', cursive;
             
-            /* The Pixie Dust Magic Background */
-            background-image: 
-                radial-gradient(ellipse at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
-                radial-gradient(ellipse at 80% 20%, rgba(255, 255, 255, 0.15) 0%, transparent 60%),
-                repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3) 0px, transparent 1.5px),
-                linear-gradient(145deg, #7D3C98 0%, #4A2066 100%); /* Base gradient */
-
-            background-size: 500px 500px; 
-            animation: starry-drift 100s linear infinite; 
+            /* Color for the new Menu Preview section background */
+            --menu-section-bg: #F4DCE3;
         }
 
-        .header-strip {
-            height: 30px;
-            background-color: rgba(255, 255, 255, 0.1); 
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2);
-            backdrop-filter: blur(5px);
+        /* --- GLOBAL & BODY STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            background-color: #F7F2F9; /* Existing body color */
+            font-family: 'Quando', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: rgba(192, 219, 245, 0.826);
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: var(--font-cursive);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 24px;
         }
         
-        header {
-             background-color: rgba(255, 255, 255, 0.2); 
-             backdrop-filter: blur(5px); 
-             color: #FFD700;
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: transparent;
+            border-radius: 50%;
+            /* Styling the SVG icon color to match the theme */
+            color: var(--secondary-pink); 
+            stroke: var(--secondary-pink);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
         }
 
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 5px 10px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-item.current {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-pink);
+            text-underline-offset: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-button {
+            border: 1px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 5px 15px;
+            background-color: transparent;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .register-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary-pink);
+            color: var(--text-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-cursive);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            background-color: var(--secondary-pink);
+            color: var(--primary-pink);
+        }
+
+        .dropdown-arrow-link {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .dropdown-arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-dark);
+            transform: translateY(2px);
+        }
+        body{
+            background-image: url(https://mir-s3-cdn-cf.behance.net/project_modules/1400/588a44195922117.66168b374ece8.gif);
+            background-repeat: no-repeat;
+            background-size: cover;
+            ;
+        }
         /* Sign-In Title Style - Matching the provided image's font and glow */
         .section-title {
-            font-family: 'Georgia', serif;
-            font-size: 2.5rem;
-            color: #DA70D6; /* Orchid/Magenta color */
-            text-shadow: 
-                0 0 10px #DA70D6, 
-                0 0 20px #9B59B6, 
-                2px 2px 0 #4A2066; /* Deep Purple 3D Shadow/Glow */
-            letter-spacing: 0.05em;
-            font-weight: 700;
+            font-family: 'Purple Purse';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 40px;
+            line-height: 38px;
+            text-align: center;
+
+            color: #217d89;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.7);
         }
 
         /* Input field styling */
         .magic-input {
-            background-color: #F5F5F5; /* Light gray input background */
-            border: 1px solid #DA70D6; 
-            color: #4A2066;
+            background-color: #d4eef1db; /* Light gray input background */
+            border: 1px solid #00BCD4; 
+            color: #00BCD4;
             padding: 0.75rem;
             border-radius: 0.75rem; 
             width: 100%;
             transition: all 0.3s;
-            box-shadow: 0 0 5px rgba(218, 112, 214, 0.5); /* Soft pink glow */
+            box-shadow: 0 0 5px rgba(21, 150, 179, 0.5); /* Soft pink glow */
         }
         .magic-input:focus {
-            border-color: #9B59B6; 
+            border-color: #00BCD4; 
             outline: none;
-            box-shadow: 0 0 0 4px rgba(155, 89, 182, 0.6);
+            box-shadow: 0 0 0 4px rgba(55, 98, 158, 0.6);
         }
         
         .magic-card {
             position: relative;
             background-color: rgba(255, 255, 255, 0.95); 
             border-radius: 1.5rem; 
-            border: 2px solid #DA70D6; /* Pink border */
-            box-shadow: 0 0 20px rgba(218, 112, 214, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5); 
+            border: 2px solid #00BCD4; /* Pink border */
+            box-shadow: 0 0 20px rgba(59, 133, 176, 0.8), 0 10px 30px rgba(0, 0, 0, 0.5); 
             z-index: 10; 
         }
 
@@ -140,68 +251,49 @@
         }
     </style>
 </head>
-<body class="flex flex-col items-center">
+<body class="min-h-screen">
 
-    <!-- 1. Navigation Bar (From previous iteration) -->
-    <header class="shadow-lg w-full">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <!-- Logo and Name -->
-            <div class="flex items-center space-x-2">
-                <img src="https://placehold.co/40x40/9B59B6/FFFFFF?text=AB" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-yellow-300">
-                <h1 class="text-xl font-bold tracking-wider text-yellow-300">Alchemist's Brew</h1>
-            </div>
+    <!-- 1. Navigation Bar (Recreated based on images) -->
+    <header class="navbar">
+            <a href="index.html" class="logo-container"> 
+            <img src="img/alchemist-icon.png" alt="Alchemist's Brew Logo Icon" class="logo-icon">
+            <span class="logo-text">Alchemist's Brew</span>
+        </a>
             
             <!-- Navigation Links -->
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" class="hover:text-yellow-300 transition-colors">Home</a>
-                <a href="#" class="hover:text-yellow-300 transition-colors">Menu</a>
-                <a href="#" class="hover:text-yellow-300 transition-colors">Study Room</a>
-                <a href="#" class="hover:text-yellow-300 transition-colors">Contact Us</a>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="menu.html" class="nav-item">Menu</a> 
+            <a href="studyroom.html" class="nav-item ">Study Room</a>
+            <a href="contactus.html" class="nav-item contact-button">Contact Us</a>
             </nav>
 
-            <!-- Profile Dropdown -->
-            <div class="flex items-center space-x-4">
-                <button class="p-2">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 text-white hover:text-yellow-300 transition-colors"></i>
-                </button>
-                <div class="flex items-center space-x-1 cursor-pointer group">
-                    <span class="text-sm font-semibold border-b border-white text-yellow-300">Sign In / Register</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-white group-hover:text-yellow-300 transition-colors"></i>
-                </div>
-            </div>
+        <div class="nav-actions">
+            <a href="shoppingcart.html" class="cart-icon">🛒</a> 
+            
+            <a href="signin.html" class="nav-item register-btn current">Sign In / Register</a>
+            
+            <a href="profile.html" class="dropdown-arrow-link">
+                <span class="dropdown-arrow"></span>
+            </a>
+        </div>
         </div>
     </header>
-    
+
     <!-- Header Strip -->
     <div class="header-strip w-full"></div>
 
     <!-- 2. Main Sign-In Content Area -->
     <main class="relative flex flex-grow items-center justify-center p-8 w-full overflow-hidden">
         
-        <!-- Hands and Butterflies Container (Under the card) -->
-        <div class="hands-container max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
-            <!-- Golden Hands SVG -->
-            <svg class="golden-hands w-full h-auto" viewBox="0 0 400 350" xmlns="http://www.w3.org/2000/svg">
-                <path d="M 20 350 C 80 200, 150 150, 190 190 V 350 Z" />
-                <path d="M 380 350 C 320 200, 250 150, 210 190 V 350 Z" />
                 <!-- Rings/Glow -->
                 <circle cx="160" cy="200" r="5" fill="#FFFFFF" opacity="0.9" />
                 <circle cx="240" cy="200" r="5" fill="#FFFFFF" opacity="0.9" />
             </svg>
             
-            <!-- Butterflies -->
-            <div class="butterfly-left absolute" style="top: 15%; left: 0%; transform: rotate(-15deg);">
-                <i data-lucide="sparkles" class="w-8 h-8 text-yellow-300 drop-shadow-lg animate-pulse" style="color: #FFD700;"></i>
-                <img src="https://placehold.co/40x40/9B59B6/FFFFFF?text=🦋" alt="Butterfly" class="w-10 h-10 transform -translate-x-1/2">
-            </div>
-            <div class="butterfly-right absolute" style="top: 15%; right: 0%; transform: rotate(15deg);">
-                <i data-lucide="sparkles" class="w-8 h-8 text-yellow-300 drop-shadow-lg animate-pulse" style="color: #FFD700;"></i>
-                <img src="https://placehold.co/40x40/9B59B6/FFFFFF?text=🦋" alt="Butterfly" class="w-10 h-10 transform translate-x-1/2">
-            </div>
-        </div>
 
         <!-- Sign In Card (z-20 to be on top of hands) -->
-        <div class="magic-card w-full max-w-sm sm:max-w-md p-6 sm:p-10 z-20">
+        <div class="magic-card sm:p-10 z-20">
             
             <!-- Tab Navigation -->
             <div class="flex justify-center mb-8 absolute top-[-25px] left-1/2 transform -translate-x-1/2 bg-white/50 backdrop-blur-sm rounded-full p-1 border border-primary-light shadow-lg">
@@ -211,7 +303,7 @@
 
             <div class="text-center pt-8">
                 <!-- Title: Unlock the Aether -->
-                <h2 class="section-title mb-8">Unlock the Aether</h2>
+                <h2 class="section-title mb-8">Unlock the Magical Aether</h2>
 
                 <form onsubmit="event.preventDefault(); alert('Attempting to sign in with Username and Password.');" class="space-y-6">
                     

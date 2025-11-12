@@ -9,17 +9,28 @@
     <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Custom Tailwind Configuration -->
+    <link rel="Icon" href="img/alchemist-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Purple+Purse&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        'celestial-blue': '#a8dadc',
-                        'deep-teal': '#457b9d',
-                        'caramel-gold': '#ffb703',
-                        'light-bg': '#fdf8e8', /* Parchment color */
-                        'dark-bg': '#1d3557',
-                        'parchment-border': '#cfa978'
+                        'celestial-blue': '#40311A',
+                        'deep-teal': '#40311A',
+                        'caramel-gold': '#5B3909',
+                        'light-bg': '#EFCFA2', /* Parchment color */
+                        'dark-bg': '#EFCFA2',
+                        'parchment-border': '#E2C08D'
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -29,12 +40,142 @@
             }
         }
     </script>
+    
     <style>
-        /* General body background to match the parchment look */
-        body {
-            background-color: #f5eedc; 
-            font-family: 'Inter', sans-serif;
+        /* CSS Variables for Dynamic Colors (Adjusted to your Tailwind palette) */
+        :root {
+            --primary-pink: #fdf8e8; /* light-bg (Parchment color) */
+            --secondary-pink: #B77F70; /* deep-teal (Accent) */
+            --text-dark: #79554B; /* dark-bg for text */
+            --font-serif: 'Playfair Display', serif;
+            --font-cursive: 'Purple Purse', cursive;
+            
+            /* Color for the new Menu Preview section background */
+            --menu-section-bg: #F4DCE3;
         }
+
+        /* --- GLOBAL & BODY STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            background-color: #f5eedc; /* Existing body color */
+            font-family: 'Quando', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* --- NAVBAR --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--primary-pink);
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: var(--font-cursive);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: transparent;
+            border-radius: 50%;
+            /* Styling the SVG icon color to match the theme */
+            color: var(--secondary-pink); 
+            stroke: var(--secondary-pink);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 5px 10px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-item.current {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-pink);
+            text-underline-offset: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-button {
+            border: 1px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 5px 15px;
+            background-color: transparent;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+
+        .register-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary-pink);
+            color: var(--text-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-cursive);
+            transition: all 0.3s ease;
+        }
+        .register-btn:hover {
+            background-color: var(--secondary-pink);
+            color: var(--primary-pink);
+        }
+
+        .dropdown-arrow-link {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .dropdown-arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-dark);
+            transform: translateY(2px);
+        }
+        
+
+        /* --- PAGE CONTENT STYLES (from original code) --- */
 
         /* Styling for the main content card, giving it a framed look */
         .sanctum-card {
@@ -45,28 +186,25 @@
 
         /* Custom styling for the main "Knowledge Sanctum" title to mimic the graphic */
         .sanctum-title {
-            font-family: 'Georgia', serif;
-            font-size: 2.5rem;
-            color: #ffb703; /* Caramel Gold */
-            text-shadow: 2px 2px 0 #1d3557, 4px 4px 0 #457b9d; /* Deep 3D Shadow */
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            line-height: 1.2;
+            font-family: var(--font-cursive);
+            font-style: normal;
+            font-weight: 400;
+            font-size: 70px;
+            line-height: 100px;
+            text-align: center;
+            color: #E79F35;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.7);
+
         }
-        @media (min-width: 768px) {
-            .sanctum-title {
-                font-size: 3.5rem;
-            }
-        }
-        
+
         /* Style for the interactive slots */
         .time-slot, .date-slot {
             cursor: pointer;
             transition: all 0.2s;
             border: 1px solid #cfa978;
         }
-        .time-slot.selected, .date-slot.selected {
-            background-color: #457b9d; /* Deep Teal */
+        .time-slot.selected, .date-slot.selected, .group-size-slot.selected {
+            background-color: #cf9345ba; /* Deep Teal */
             color: white;
             transform: scale(1.05);
             box-shadow: 0 0 0 2px #ffb703; /* Gold outline */
@@ -82,45 +220,49 @@
             transform: none;
             box-shadow: none;
         }
+        .group-size-slot {
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .group-size-slot:hover:not(.selected) {
+            background-color: #f0ead8;
+        }
     </style>
 </head>
 <body class="min-h-screen">
 
-    <!-- Header & Navigation Bar (Reused from Menu Page) -->
-    <header class="bg-deep-teal shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center text-light-bg">
-            <!-- Logo and Name -->
-            <div class="flex items-center space-x-2">
-                <svg class="w-8 h-8 text-caramel-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354l.35.707L16 6.354l.646 1.292 2.707.646-.35.707 2.06 4.12-.707.35-1.292 2.584-.646 1.292-3.12 1.56L12 21l-3.354-1.677-3.12-1.56-.646-1.292-1.292-2.584-.707-.35 2.06-4.12-.35-.707 2.707-.646.646-1.292 3.654-1.827L12 4.354zM12 8v4m0 4h.01"></path>
-                </svg>
-                <h1 class="text-xl font-bold tracking-wider">Alchemist's Brew</h1>
-            </div>
+    <header class="navbar">
+        <a href="index.html" class="logo-container"> 
+            <img src="img/alchemist-icon.png" alt="Alchemist's Brew Logo Icon" class="logo-icon">
+            <span class="logo-text">Alchemist's Brew</span>
+        </a>
             
             <!-- Navigation Links -->
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" class="hover:text-caramel-gold transition-colors">Home</a>
-                <a href="#" class="hover:text-caramel-gold transition-colors">Menu</a>
-                <a href="#" class="border-b-2 border-caramel-gold pb-1">Study Room</a>
-                <a href="#" class="hover:text-caramel-gold transition-colors">Contact Us</a>
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="menu.html" class="nav-item">Menu</a> 
+            <a href="studyroom.html" class="nav-item current">Study Room</a>
+            <a href="contactus.html" class="nav-item contact-button">Contact Us</a>
             </nav>
 
-            <!-- Cart and Sign In -->
-            <div class="flex items-center space-x-4">
-                <button class="p-2 rounded-full hover:bg-celestial-blue/20 transition-colors">
-                    <i data-lucide="shopping-cart" class="w-5 h-5"></i>
-                </button>
-                <button class="bg-caramel-gold text-dark-bg px-4 py-2 rounded-full text-sm font-semibold hover:bg-yellow-600 transition-colors shadow-md">
-                    Sign In / Register
-                </button>
-            </div>
+        <div class="nav-actions">
+            <a href="shoppingcart.html" class="cart-icon">🛒</a> 
+            
+            <a href="signin.html" class="register-btn">Sign In / Register</a>
+            
+            <a href="profile.html" class="dropdown-arrow-link">
+                <span class="dropdown-arrow"></span>
+            </a>
+        </div>
         </div>
     </header>
+
+
+
 
     <main class="container mx-auto px-4 py-8">
         <!-- Main Reservation Card -->
         <div class="sanctum-card rounded-xl p-6 md:p-10">
-            <!-- Title -->
             <div class="text-center mb-10">
                 <h2 class="sanctum-title">The Knowledge Sanctum</h2>
             </div>
@@ -155,7 +297,7 @@
                         
                         <!-- Check-in Time Selection -->
                         <div>
-                            <p class="text-lg font-semibold text-dark-bg mb-3 flex items-center">
+                            <p class="text-lg font-semibold text-caramel-gold mb-3 flex items-center">
                                 <i data-lucide="log-in" class="w-5 h-5 mr-2 text-caramel-gold"></i>
                                 Check-in Time
                             </p>
@@ -166,7 +308,7 @@
 
                         <!-- Check-out Time Selection -->
                         <div>
-                            <p class="text-lg font-semibold text-dark-bg mb-3 flex items-center">
+                            <p class="text-lg font-semibold text-caramel-gold mb-3 flex items-center">
                                 <i data-lucide="log-out" class="w-5 h-5 mr-2 text-caramel-gold"></i>
                                 Check-out Time <span id="checkout-guide" class="text-sm ml-2 text-deep-teal font-normal">(Must be after Check-in)</span>
                             </p>
@@ -182,16 +324,16 @@
                         <form id="reservation-form" class="space-y-4">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 <label class="block">
-                                    <span class="text-sm font-medium text-dark-bg">First Name*</span>
+                                    <span class="text-sm font-medium text-caramel-gold">First Name*</span>
                                     <input type="text" id="first-name" class="mt-1 block w-full rounded-lg border-parchment-border border-2 p-2 focus:border-deep-teal focus:ring-deep-teal" required placeholder="First Name">
                                 </label>
                                 <label class="block">
-                                    <span class="text-sm font-medium text-dark-bg">Last Name*</span>
+                                    <span class="text-sm font-medium text-caramel-gold">Last Name*</span>
                                     <input type="text" id="last-name" class="mt-1 block w-full rounded-lg border-parchment-border border-2 p-2 focus:border-deep-teal focus:ring-deep-teal" required placeholder="Last Name">
                                 </label>
                             </div>
                             <label class="block">
-                                <span class="text-sm font-medium text-dark-bg">Mobile Number:</span>
+                                <span class="text-sm font-medium text-caramel-gold">Mobile Number:</span>
                                 <input type="tel" id="mobile-number" class="mt-1 block w-full rounded-lg border-parchment-border border-2 p-2 focus:border-deep-teal focus:ring-deep-teal" placeholder="e.g. 09999999999">
                             </label>
                             <label class="block">
@@ -204,10 +346,10 @@
                                 <h3 class="text-xl font-bold text-deep-teal mb-4 border-b border-caramel-gold pb-2">Book for Group</h3>
                                 <div class="grid grid-cols-4 gap-2">
                                     <!-- Group Size Slots (2-5 people) -->
-                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-dark-bg transition-all duration-200" onclick="selectGroupSize(2)">2 Pax</div>
-                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-dark-bg transition-all duration-200" onclick="selectGroupSize(3)">3 Pax</div>
-                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-dark-bg transition-all duration-200" onclick="selectGroupSize(4)">4 Pax</div>
-                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-dark-bg transition-all duration-200" onclick="selectGroupSize(5)">5 Pax</div>
+                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-caramel-gold transition-all duration-200" onclick="selectGroupSize(2)">2 Pax</div>
+                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-caramel-gold transition-all duration-200" onclick="selectGroupSize(3)">3 Pax</div>
+                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-caramel-gold transition-all duration-200" onclick="selectGroupSize(4)">4 Pax</div>
+                                    <div class="group-size-slot text-center p-3 rounded-lg border-2 border-parchment-border bg-white text-caramel-gold transition-all duration-200" onclick="selectGroupSize(5)">5 Pax</div>
                                 </div>
                             </div>
                         </form>
@@ -221,11 +363,11 @@
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-deep-teal border-b border-caramel-gold pb-2">Reservation Summary</h3>
                         <div id="summary-details" class="text-sm space-y-1">
-                            <p><span class="font-semibold text-dark-bg">DATE:</span> <span id="summary-date">Sat, Nov. 15, 2025</span></p>
-                            <p><span class="font-semibold text-dark-bg">CHECK-IN:</span> <span id="summary-check-in">12:00 pm</span></p>
-                            <p><span class="font-semibold text-dark-bg">CHECK-OUT:</span> <span id="summary-check-out">3:00 pm</span></p>
-                            <p><span class="font-semibold text-dark-bg">TOTAL LENGTH OF STAY:</span> <span id="summary-length">3 HOURS</span></p>
-                            <p><span class="font-semibold text-dark-bg">YOU SELECTED:</span> <span id="summary-group-size">GROUP OF 5</span></p>
+                            <p><span class="font-semibold text-caramel-gold">DATE:</span> <span id="summary-date"></span></p>
+                            <p><span class="font-semibold text-caramel-gold">CHECK-IN:</span> <span id="summary-check-in"></span></p>
+                            <p><span class="font-semibold text-caramel-gold">CHECK-OUT:</span> <span id="summary-check-out"></span></p>
+                            <p><span class="font-semibold text-caramel-gold">TOTAL LENGTH OF STAY:</span> <span id="summary-length"></span></p>
+                            <p><span class="font-semibold text-caramel-gold">YOU SELECTED:</span> <span id="summary-group-size"></span></p>
                         </div>
                     </div>
 
@@ -233,9 +375,9 @@
                     <div class="space-y-4">
                         <h3 class="text-xl font-bold text-deep-teal border-b border-caramel-gold pb-2">Information Summary</h3>
                         <div id="info-summary-details" class="text-sm space-y-1">
-                            <p>Reserved for: <span id="summary-name">First Name and Last Name</span></p>
-                            <p>Email Address: <span id="summary-email">Email Address @ .com</span></p>
-                            <p>Contact Number: <span id="summary-mobile">09999999999</span></p>
+                            <p>Reserved for: <span id="summary-name"></span></p>
+                            <p>Email Address: <span id="summary-email"></span></p>
+                            <p>Contact Number: <span id="summary-mobile">+63 </span></p>
                         </div>
                     </div>
                     
@@ -401,7 +543,7 @@
 
                 return `
                     <div class="time-slot p-3 rounded-lg text-center border-parchment-border border-2 bg-white ${isSelected ? 'selected' : ''} ${disabledClass}" 
-                         onclick="selectEndTime('${endTime}', this)">
+                           onclick="selectEndTime('${endTime}', this)">
                         ${endTime}
                     </div>
                 `;
@@ -482,12 +624,12 @@
             // Remove 'selected' class from all group size slots
             document.querySelectorAll('.group-size-slot').forEach(slot => {
                 slot.classList.remove('selected', 'bg-deep-teal', 'text-white');
-                slot.classList.add('bg-white', 'text-dark-bg');
+                slot.classList.add('bg-white', 'text-caramel-gold');
             });
 
             // Set active state for the clicked slot
             event.target.classList.add('selected', 'bg-deep-teal', 'text-white');
-            event.target.classList.remove('bg-white', 'text-dark-bg');
+            event.target.classList.remove('bg-white', 'text-caramel-gold');
 
             updateSummaries();
         }

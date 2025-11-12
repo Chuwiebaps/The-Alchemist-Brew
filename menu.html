@@ -305,7 +305,7 @@
         <div class="nav-actions">
             <a href="shoppingcart.html" class="cart-icon">🛒</a> 
             
-            <a href="register.html" class="register-btn">Sign In / Register</a>
+            <a href="signin.html" class="register-btn">Sign In / Register</a>
             
             <a href="profile.html" class="dropdown-arrow-link">
                 <span class="dropdown-arrow"></span>
@@ -328,17 +328,45 @@
     <script>
         // --- Data Structure for Menu Items (Updated to match the "The Midas Touch" items) ---
         const MENU_DATA = [
-            // These items are placeholders for the five visible "The Midas Touch" items in the image.
-            { id: 1, name: "The Midas Touch (Caramel Macchiato)", category: "COFFEE", price: "180.00", description: "A truly magical concoction. This coffee is infused with a caramel so rich and luxurious, it feels as though everything it touches has been turned to gold.", imageUrl: "img/midas-touch-iced-macchiato.jpg" }, 
-            { id: 2, name: "The Black Onyx (Cold Brew)", category: "COFFEE", price: "140.00", description: "A powerful, dark brew as deep and mysterious as a polished onyx stone. This elixir provides strength and focus for your day's quests.", imageUrl: "img/midas-touch-cold-brew.jpg" }, 
-            { id: 3, name: "The Midas Touch (Hot Spiced)", category: "COFFEE", price: "180.00", description: "A truly magical concoction. This coffee is infused with a caramel so rich and luxurious, it feels as though everything it touches has been turned to gold.", imageUrl: "img/midas-touch-hot-spiced.jpg" },
-            { id: 4, name: "The Midas Touch (Hot Latte)", category: "COFFEE", price: "180.00", description: "A truly magical concoction. This coffee is infused with a caramel so rich and luxurious, it feels as though everything it touches has been turned to gold.", imageUrl: "img/midas-touch-hot-latte.jpg" },
-            { id: 5, name: "The Midas Touch (Tall Iced)", category: "COFFEE", price: "180.00", description: "A truly magical concoction. This coffee is infused with a caramel so rich and luxurious, it feels as though everything it touches has been turned to gold.", imageUrl: "img/midas-touch-tall-iced.jpg" }, 
-            
-            // Other placeholder items to ensure the other categories exist
-            { id: 6, name: "Elixir of Life", category: "NON-COFFEE", price: "160.00", description: "A refreshing blend of sparkling lemonade...", imageUrl: "https://placehold.co/400x300/98c1d9/1d3557?text=Elixir+of+Life" },
-            { id: 7, name: "Frozen Nebula", category: "ICED & CHILLED CONCOCTIONS", price: "195.00", description: "A sweet, blended drink that swirls like a distant galaxy...", imageUrl: "https://placehold.co/400x300/98c1d9/1d3557?text=Frozen+Nebula" },
-            { id: 8, name: "Mana Muffin", category: "PASTRIES", price: "110.00", description: "A blueberry muffin infused with pure energy...", imageUrl: "https://placehold.co/400x300/94d2bd/1d3557?text=Mana+Muffin" },
+            // COFFEE SELECTION
+            { id: 1, name: "The Midas Touch (Caramel Macchiato)", category: "COFFEE", price: "180.00", description: "A truly magical concoction. This coffee is infused with a caramel so rich and luxurious, it feels as though everything it touches has been turned to gold.", imageUrl: "menu-img/midas towch.jpg" }, 
+            { id: 2, name: "The Black Onyx (Cold Brew)", category: "COFFEE", price: "140.00", description: "A powerful, dark brew as deep and mysterious as a polished onyx stone. This elixir provides strength and focus for your day's quests.", imageUrl: "menu-img/black onix.jpg" }, 
+            { id: 3, name: "The Sweet Sorcery (Spanish Latte)", category: "COFFEE", price: "200.00", description: "​A bewitching and delightful brew of our espresso and sweetened condensed milk, creating a rich, creamy, and irresistible potion.", imageUrl: "menu-img/sweet sorseri.jpeg" },
+            { id: 4, name: "The Nimbus Brew (Cappuccino)", category: "COFFEE", price: "180.00", description: "A classic potion of espresso, velvety steamed milk, and a thick cloud of ethereal foam. A light, airy brew for a peaceful moment.", imageUrl: "menu-img/nimbus bro.jpg" },
+            { id: 5, name: "The Chocolate Chimera (Mocha)", category: "COFFEE", price: "175.00", description: "A rich and mysterious fusion of espresso, decadent chocolate, and steamed milk. A delicious and complex beast of a drink", imageUrl: "menu-img/chocoleyt chimera.jpg" }, 
+            { id: 6, name: "The Silver Orb (Latte) ", category: "COFFEE", price: "180.00", description: "​A smooth, harmonious blend of espresso and steamed milk, topped with a silken, creamy finish. A perfectly balanced concoction.", imageUrl: "menu-img/silver orb.jpeg" },
+            { id: 7, name: "The Elixir of Vigor", category: "COFFEE", price: "180.00", description: "Equal parts espresso and steamed milk. A small, potent, and perfectly balanced draught for quick vitality.", imageUrl: "menu-img/elixir of vigor.jpeg" },
+            { id: 8, name: "Caramelized Orb", category: "COFFEE", price: "190.00", description: "A latte flavored with rich vanilla, topped with a thin layer of caramelized sugar for a satisfying crackle.", imageUrl: "menu-img/caramelized orb.jpg" },
+
+            // NON-COFFEE SELECTION
+            { id: 9, name: "The Hearthfire Potion (Chai Latte)", category: "NON-COFFEE", price: "120.00", description: "A warm, spiced potion with notes of cinnamon, cardamom, and clove, designed to ignite your inner fire and bring a sense of cozy magic.", imageUrl: "menu-img/jade esens.jpg" },
+            { id: 10, name: "The Lunar Lemonade (Fresh Lemonade)", category: "NON-COFFEE", price: "100.00", description: "A tart, refreshing elixir crafted to cool and enlighten. This icy potion is a simple, yet spellbinding, charm for a hot day.", imageUrl: "menu-img/aurora boryalis.jpg" },
+            { id: 11, name: "The Dragon's Breath (Hot Chocolate)", category: "NON-COFFEE", price: "100.00", description: "A rich, dark potion of molten chocolate and milk, guaranteed to warm you from the inside out and give you a powerful glow.", imageUrl: "menu-img/tears of siren.jpg" },
+            { id: 12, name: "Phoenix's Rebirth", category: "NON-COFFEE", price: "140.00", description: "A bright, invigorating draught of sweet mango and citrus, with a subtle, slow-burning kick of chili at the finish. Rejuvenating and surprising.", imageUrl: "menu-img/pinkfrap.jpg" },
+            { id: 13, name: "Sylph's Zephyr", category: "NON-COFFEE", price: "130.00", description: "A light, effervescent potion of fresh lime juice, mint, and sparkling water. As gentle and refreshing as a breath of wind.", imageUrl: "menu-img/golden elix.jpg" },
+            { id: 14, name: "Emerald Insight", category: "NON-COFFEE", price: "140.00", description: "Earthy, vibrant matcha shaken with cold, tart lemonade. A potent, focused green elixir for a clear mind.", imageUrl: "menu-img/voidstone.jpg" },
+            { id: 15, name: "Potion of Levitation", category: "NON-COFFEE", price: "130.00", description: "A classic, bubbly, sweet potion of dark root beer topped with a scoop of vanilla ice cream. A timeless charm for pure enjoyment.", imageUrl: "menu-img/swirl.jpg" },
+            { id: 16, name: "Witch's Brew", category: "NON-COFFEE", price: "130.00", description: "Tart hibiscus tea brewed strong, sweetened slightly, and mixed with fresh berries. A blood-red, flavorful, and thirst-quenching spell.", imageUrl: "menu-img/fae.png" },
+
+            // ICED & CHILLED CONCOCTIONS
+            { id: 17, name: "The Jade Essence(Matcha Latte)", category: "ICED & CHILLED CONCOCTIONS", price: "200.00", description: "A vibrant, emerald-green potion crafted from the purest, finely ground tea leaves. This earthy and revitalizing brew awakens the mind and nourishes the soul.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 18, name: "Aurora Borealis", category: "ICED & CHILLED CONCOCTIONS", price: "180.00", description: "A visually stunning refresher layered with passion fruit and ginger, achieving its vibrant, cosmic blue hue naturally. Icy cold and bright.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 19, name: "Tears of the Siren", category: "ICED & CHILLED CONCOCTIONS", price: "200.00", description: "A dangerously smooth caramel frappe blended with a touch of sea salt and a light, mesmerizing turquoise drizzle.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 20, name: "The Rose Elixir (Iced Strawberry Frappe)", category: "ICED & CHILLED CONCOCTIONS", price: "200.00", description: "A sweet, ruby-hued concoction of strawberries and ice, whipped into a delightful, frosty blend. It's a charm to lift your spirits and enchant your senses.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 21, name: "The Golden Elixir (Iced Caramel Latte)", category: "ICED & CHILLED CONCOCTIONS", price: "150.00", description: "A sweet, sun-kissed potion infused with golden caramel. This rich and creamy brew is crafted to turn your day from simple to sublime.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 22, name: "The Voidstone Potion (Cookies & Cream Frappe) ", category: "ICED & CHILLED CONCOCTIONS", price: "200.00", description: "A dark, cold concoction of rich chocolate and crushed cookie fragments, blended into a potion as mysterious and powerful as a voidstone.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 23, name: "The Enchanted Swirl (Milkshake)", category: "ICED & CHILLED CONCOCTIONS", price: "180.00", description: "​A classic, thick potion of ice cream and magic, swirled into a blissful, creamy concoction.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+            { id: 24, name: "The Fae Woodland", category: "ICED & CHILLED CONCOCTIONS", price: "150.00", description: "​A classic, thick potion of ice cream and magic, swirled into a blissful, creamy concoction.", imageUrl: "img/midas-touch-tall-iced.jpg" },
+
+            // PASTRIES
+            { id: 25, name: "The Golden Spiral (Cinnamon Roll)", category: "PASTRIES", price: "80.00", description: "A warm, coiled pastry infused with the Spirits of Prosperity and sweet spice, guaranteeing a day of good fortune.", imageUrl: "menu-img/GOLDEN SPIRAL.jpg" },
+            { id: 26, name: "The Dark Matter (Chocolate Fudge Brownie)", category: "PASTRIES", price: "80.00", description: "A dense, intensely rich, and cosmic void of pure chocolate essence. Consume and embrace the mysteries of the universe.", imageUrl: "menu-img/dark matter.jpg" },
+            { id: 27, name: "The Celestial Gateau (Blueberry Lemon Cake) ", category: "PASTRIES", price: "140.00", description: "A vibrant slice of Blueberry Lemon Cake, tasting like the sweet, clear air found just beyond the heavenly gates.", imageUrl: "menu-img/celestial gateau.jpg" },
+            { id: 28, name: "The Phoenix's Feather (Croissant)", category: "PASTRIES", price: "90.00", description: "A light, flaky, and buttery creation, reborn from the ashes with a delicate crust of golden immortality.", imageUrl: "menu-img/phoenix feather.jpg" },
+            { id: 29, name: "The Sunstone Cookie (Chocolate Chip Cookie)", category: "PASTRIES", price: "80.00", description: "A soft, warm cookie embedded with rich chocolate chips, capturing the benevolent power and warmth of the sun.", imageUrl: "menu-img/sunstone cookie.jpg" },
+            { id: 30, name: "The Molten Core (Chocolate Lava Cake)", category: "PASTRIES", price: "140.00", description: "A decadent chocolate cake concealing a molten, fiery center. Break the crust to release the intense, pure energy within.", imageUrl: "menu-img/molten core.jpg" },
+            { id: 31, name: "The Lunar Cheesecake (cheskeyk)", category: "PASTRIES", price: "140.00", description: "A velvety smooth cheesecake, its light and creamy texture as cool and ethereal as a slice of the full moon.", imageUrl: "menu-img/lunar cheesecake.jpg" },
+            { id: 32, name: "The Heartstone Slice (Red Velvet Cake)", category: "PASTRIES", price: "150.00", description: "A deep red velvet cake, symbolizing the true heart of the alchemist. Richly layered with a divine cream cheese frosting.", imageUrl: "menu-img/heartstone slice.jpg" },
         ];
 
         // Unique categories list
