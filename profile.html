@@ -9,6 +9,23 @@
     <!-- Load Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     <!-- Custom Tailwind Configuration -->
+    <link rel="Icon" href="img/alchemist-icon.png">
+    <link rel="Icon" href="img/alchemist-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quando&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Purple+Purse&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Purple+Purse&family=Quando&display=swap" rel="stylesheet">
+
     <script>
         tailwind.config = {
             theme: {
@@ -29,17 +46,138 @@
         }
     </script>
     <style>
-        body {
-            background-color: var(--light-pink);
-            font-family: 'Inter', sans-serif;
-            color: #C08080;
+        /* CSS Variables for Dynamic Colors */
+        :root {
+            --primary-pink: #fce8f0; /* Default: Navbar Background */
+            --secondary-pink: #e76f92; /* Default: Navbar Accent (Button fill/border) - Used for category active button */
+            --text-dark: #3f2f45; /* Dark purple/brown for text */
+            --font-serif: 'Playfair Display', serif;
+            --font-cursive: 'Purple Purse', cursive;
+            --menu-section-bg: #F4DCE3; 
+
+            /* --- NEW VARIABLES FOR VISUAL MATCH --- */
+            --menu-bg-color: #f9e0e7; /* Light blue background for body */
+            --card-bg-color: #f0f8ff; /* Very light blue/white for card background */
+            --card-border-color: #d1e2f0; /* Soft border color for cards */
+            --card-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            --dark-text-color: #2c3e50;
+            --price-color: #3f2f45; /* Darker color for price */
+            --category-tab-bg: #E0F7FA;
+            --category-tab-border: #e76f92;
+            --card-hover-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
         }
 
-        /* Header strip below the nav bar */
-        .header-strip {
-            height: 30px;
-            background-color: #F0E0E0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+        /* --- GLOBAL & BODY STYLES (From your target CSS) --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        body {
+            font-family: 'Quando', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden; 
+            background-color: var(--menu-bg-color); /* Light blue background */
+        }
+        
+        /* --- NAVBAR STYLES (Kept as is) --- */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            background-color: var(--primary-pink); 
+            color: var(--text-dark);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            font-family: var(--font-cursive);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 24px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            margin-right: 10px;
+            background-color: transparent; 
+            border-radius: 50%;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 5px 10px;
+            font-size: 18px;
+            position: relative;
+        }
+
+        .nav-item.current {
+            text-decoration: underline;
+            text-decoration-color: var(--secondary-pink);
+            text-underline-offset: 8px;
+            font-weight: bold;
+        }
+        
+        .contact-button {
+            border: 1px solid var(--secondary-pink);
+            border-radius: 20px;
+            padding: 5px 15px;
+            background-color: transparent;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .cart-icon {
+            font-size: 24px;
+            text-decoration: none;
+            color: var(--text-dark); 
+        }
+
+        .register-btn {
+            background-color: transparent;
+            border: 1px solid var(--secondary-pink);
+            color: var(--text-dark);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: var(--font-cursive);
+            font-size: 16px;
+        }
+        
+        .dropdown-arrow-link {
+            text-decoration: none;
+            color: var(--text-dark);
+        }
+        
+        .dropdown-arrow {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 5px solid var(--text-dark);
+            transform: translateY(2px);
         }
 
         /* Styling for the main section title (e.g., Starlight Profile) */
@@ -372,8 +510,8 @@
             const orders = userData.orders || [];
 
             if (orders.length === 0) {
-                 container.innerHTML = `<div class="p-8 text-center text-text-pink/70 italic">No spellbound transactions found in the archives.</div>`;
-                 return;
+                container.innerHTML = `<div class="p-8 text-center text-text-pink/70 italic">No spellbound transactions found in the archives.</div>`;
+                return;
             }
 
             orders.forEach(order => {
@@ -497,35 +635,30 @@
         };
 
     </script>
+</head>
+<body class="font-sans min-h-screen">
 
-    <!-- 1. Navigation Bar -->
-    <header class="bg-light-pink shadow-lg">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center text-text-pink">
-            <!-- Logo and Name -->
-            <div class="flex items-center space-x-2">
-                <!-- Using a placeholder logo from your screenshot -->
-                <img src="https://placehold.co/40x40/E9A0A0/F8E9E9?text=AB" alt="Alchemist's Brew Logo" class="w-10 h-10 rounded-full border-2 border-profile-icon">
-                <h1 class="text-xl font-bold tracking-wider">Alchemist's Brew</h1>
-            </div>
+    <header class="navbar">
+        <a href="index.html" class="logo-container"> 
+            <img src="img/alchemist-icon.png" alt="Alchemist's Brew Logo Icon" class="logo-icon">
+            <span class="logo-text">Alchemist's Brew</span>
+        </a>
+        
+        <nav class="nav-links">
+            <a href="index.html" class="nav-item">Home</a>
+            <a href="menu.html" class="nav-item ">Menu</a> 
+            <a href="studyroom.html" class="nav-item">Study Room</a>
+            <a href="contactus.html" class="nav-item contact-button">Contact Us</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="shoppingcart.html" class="cart-icon">🛒</a> 
             
-            <!-- Navigation Links -->
-            <nav class="hidden md:flex space-x-6 text-sm font-medium">
-                <a href="#" class="hover:text-profile-icon transition-colors">Home</a>
-                <a href="#" class="hover:text-profile-icon transition-colors">Menu</a>
-                <a href="#" class="hover:text-profile-icon transition-colors">Study Room</a>
-                <a href="#" class="hover:text-profile-icon transition-colors">Contact Us</a>
-            </nav>
-
-            <!-- Profile Dropdown (Simulating your dropdown menu) -->
-            <div class="flex items-center space-x-4">
-                <button class="p-2">
-                    <i data-lucide="shopping-cart" class="w-5 h-5 text-text-pink hover:text-profile-icon transition-colors"></i>
-                </button>
-                <div class="flex items-center space-x-1 cursor-pointer group">
-                    <span class="text-sm font-semibold border-b border-text-pink hover:text-profile-icon">Sign In / Register</span>
-                    <i data-lucide="chevron-down" class="w-4 h-4 text-text-pink group-hover:text-profile-icon transition-colors"></i>
-                </div>
-            </div>
+            <a href="signin.html" class="register-btn">Sign In / Register</a>
+            
+            <a href="profile.html" class="dropdown-arrow-link current">
+                <span class="dropdown-arrow"></span>
+            </a>
         </div>
     </header>
     
@@ -548,12 +681,12 @@
 
                 <!-- Profile Menu -->
                 <nav class="w-full space-y-4 text-center">
-                    <a id="link-starlight-profile" class="menu-link" onclick="showSection('starlight-profile')">Starlight Profile</a>
-                    <a id="link-past-orders" class="menu-link" onclick="showSection('past-orders')">Check Past Orders</a>
-                    <a id="link-change-username-email" class="menu-link" onclick="showSection('change-username-email')">Change Username/Email</a>
-                    <a id="link-change-password" class="menu-link" onclick="showSection('change-password')">Change Password</a>
-                    <a id="link-log-out" class="menu-link" onclick="showSection('log-out')">Log Out</a>
-                    <a id="link-delete-account" class="menu-link" onclick="showSection('delete-account')">Delete Account</a>
+                    <h1><a id="link-starlight-profile" class="menu-link" onclick="showSection('starlight-profile')">Starlight Profile</a></h1>
+                    <h1><a id="link-past-orders" class="menu-link" onclick="showSection('past-orders')">Check Past Orders</a></h1>
+                    <h1><a id="link-change-username-email" class="menu-link" onclick="showSection('change-username-email')">Change Username/Email</a></h1>
+                    <h1><a id="link-change-password" class="menu-link" onclick="showSection('change-password')">Change Password</a></h1>
+                    <h1><a id="link-log-out" class="menu-link" onclick="showSection('log-out')">Log Out</a></h1>
+                    <h1><a id="link-delete-account" class="menu-link" onclick="showSection('delete-account')">Delete Account</a></h1>
                 </nav>
             </div>
             
